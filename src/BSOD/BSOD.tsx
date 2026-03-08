@@ -101,7 +101,7 @@ const BSOD = React.memo(
       };
       draw();
       return () => cancelAnimationFrame(animId);
-    }, [phase]);
+    }, [phase, showSplash]);
 
     // ── Splash screen ─────────────────────────────────────────────────────
     if (showSplash) {
