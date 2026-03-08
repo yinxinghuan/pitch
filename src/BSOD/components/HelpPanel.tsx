@@ -36,34 +36,22 @@ const HelpPanel = React.memo(
             <HelpStat
               icon={iconEnergy} color="var(--bs-energy)"
               name={getText('体力', 'Energy')}
-              desc={getText(
-                '日常行动的基础。过低时行动受限，归零则直播生涯终结。',
-                'Powers your daily actions. Too low limits choices; hits zero and it\'s over.'
-              )}
+              desc={getText('归零则游戏结束', 'Hits zero = game over')}
             />
             <HelpStat
               icon={iconMood} color="var(--bs-mood)"
               name={getText('心情', 'Mood')}
-              desc={getText(
-                '影响直播氛围与观众留存。情绪崩溃会让粉丝流失加速。',
-                'Affects stream quality and viewer retention. Crashing mood accelerates follower loss.'
-              )}
+              desc={getText('影响直播质量与粉丝留存', 'Affects stream quality & retention')}
             />
             <HelpStat
               icon={iconFocus} color="var(--bs-focus)"
               name={getText('专注', 'Focus')}
-              desc={getText(
-                '内容创作力的核心。专注越高直播涨粉越快，归零则输出停滞。',
-                'Core of content quality. Higher focus = faster growth; zero means stagnation.'
-              )}
+              desc={getText('越高涨粉越快，归零则停滞', 'Higher = faster growth; zero = stagnation')}
             />
             <HelpStat
               icon={iconFollowers} color="var(--bs-followers)"
               name={getText('粉丝', 'Followers')}
-              desc={getText(
-                '你的受众规模。坚持直播 13 天——无论多少粉丝都是一种胜利。',
-                'Your audience size. Survive 13 days of streaming — any follower count is a win.'
-              )}
+              desc={getText('坚持 13 天直播即为胜利', 'Survive 13 days streaming = win')}
             />
           </div>
 

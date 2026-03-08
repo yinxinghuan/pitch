@@ -2,39 +2,45 @@
   position: absolute;
   inset: 0;
   z-index: 90;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px;
 
   &__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(4, 6, 14, 0.72);
+    background: rgba(4, 6, 14, 0.8);
     pointer-events: all;
   }
 
   &__panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    max-height: 80dvh;
+    overflow-y: auto;
     background: #1e2028;
     border: 2px solid #0a0c14;
-    border-top: none;
-    border-radius: 0 0 6px 6px;
-    box-shadow: 0 8px 0 #0a0c14;
-    padding: 0 20px 20px;
+    border-radius: 6px;
+    box-shadow: 0 8px 0 #0a0c14, 0 0 40px rgba(0,0,0,0.6);
+    padding: 0 18px 20px;
     pointer-events: all;
-    animation: bs-help-drop 0.18s ease forwards;
-    max-height: 88dvh;
-    overflow-y: auto;
+    animation: bs-help-pop 0.16s ease forwards;
   }
 
+  // ── Header ───────────────────────────────────────────────────────────────────
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 0 12px;
+    padding: 16px 0 14px;
     border-bottom: 1px solid rgba(180, 190, 210, 0.1);
     margin-bottom: 16px;
+    position: sticky;
+    top: 0;
+    background: #1e2028;
+    z-index: 1;
   }
 
   &__title {
@@ -46,7 +52,7 @@
 
   &__close {
     all: unset;
-    font-size: 18px;
+    font-size: 20px;
     color: rgba(180, 190, 210, 0.45);
     cursor: pointer;
     padding: 4px 8px;
@@ -55,103 +61,108 @@
     &:active { color: rgba(180, 190, 210, 0.9); }
   }
 
+  // ── Section label ────────────────────────────────────────────────────────────
   &__section-label {
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
-    color: rgba(180, 190, 210, 0.35);
+    color: rgba(180, 190, 210, 0.3);
     letter-spacing: 0.14em;
-    margin-bottom: 12px;
-    margin-top: 6px;
+    margin: 0 0 12px;
   }
 
-  // ── Stat rows ───────────────────────────────────────────────────────────────
+  // ── Stat rows ────────────────────────────────────────────────────────────────
   &__stats {
     display: flex;
     flex-direction: column;
-    gap: 14px;
     margin-bottom: 20px;
   }
 
   &__stat {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 12px 0;
+
+    & + & {
+      border-top: 1px solid rgba(180, 190, 210, 0.07);
+    }
   }
 
   &__stat-icon {
-    width: 34px;
-    height: 34px;
+    grid-row: 1 / 3;
+    width: 38px;
+    height: 38px;
     image-rendering: pixelated;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  &__stat-text {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    align-self: center;
   }
 
   &__stat-name {
     font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    line-height: 1.4;
+    font-size: 13px;
+    line-height: 1.3;
+    align-self: end;
   }
 
   &__stat-desc {
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 13px;
-    color: rgba(180, 190, 210, 0.6);
-    line-height: 1.65;
+    font-size: 15px;
+    color: rgba(180, 190, 210, 0.55);
+    line-height: 1.5;
+    align-self: start;
   }
 
-  // ── Timeline segments ───────────────────────────────────────────────────────
+  // ── Timeline ─────────────────────────────────────────────────────────────────
   &__timeline-desc {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
 
   &__seg {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0;
+
+    & + & {
+      border-top: 1px solid rgba(180, 190, 210, 0.07);
+    }
   }
 
   &__seg-label {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    min-width: 52px;
-    flex-shrink: 0;
+    font-size: 11px;
     line-height: 1;
   }
 
   &__seg-live {
-    font-size: 7px;
+    font-size: 8px;
     opacity: 0.8;
   }
 
   &__seg-desc {
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 13px;
-    color: rgba(180, 190, 210, 0.6);
-    line-height: 1.55;
+    font-size: 15px;
+    color: rgba(180, 190, 210, 0.55);
+    line-height: 1.45;
   }
 
   // ── Tip ─────────────────────────────────────────────────────────────────────
   &__tip {
     font-family: 'Noto Sans SC', sans-serif;
-    font-size: 13px;
-    color: rgba(180, 190, 210, 0.45);
-    line-height: 1.7;
+    font-size: 14px;
+    color: rgba(180, 190, 210, 0.4);
+    line-height: 1.65;
     margin: 0;
     padding-top: 14px;
     border-top: 1px solid rgba(180, 190, 210, 0.08);
   }
 }
 
-@keyframes bs-help-drop {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes bs-help-pop {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
 }
