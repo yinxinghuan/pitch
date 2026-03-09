@@ -79,7 +79,7 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '不回了',
         labelEn: 'Leave it on read',
-        effect: { mood: -8, connection: -2 },
+        effect: { mood: -8, focus: 10, connection: -2 },
         emotion: 'sad',
       },
     ],
@@ -176,7 +176,7 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '观众来来去去，正常的',
         labelEn: 'Viewers come and go. Normal.',
-        effect: { mood: -5, connection: -2 },
+        effect: { mood: -5, focus: 10, followers: 30, connection: -2 },
         emotion: 'sad',
       },
     ],
@@ -242,7 +242,7 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '说"忙"，挂了',
         labelEn: '"I\'m busy," and hang up',
-        effect: { mood: -10, focus: 5, connection: -2 },
+        effect: { mood: -10, focus: 18, energy: 5, connection: -2 },
         emotion: 'sad',
       },
     ],
@@ -264,7 +264,7 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '算了，等这段忙完再说',
         labelEn: 'Wait until after this busy stretch',
-        effect: { mood: -12, connection: -2 },
+        effect: { mood: -12, focus: 12, energy: 8, connection: -2 },
         emotion: 'sad',
       },
     ],
