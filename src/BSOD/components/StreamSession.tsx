@@ -187,10 +187,17 @@ const StreamSession = React.memo(
         )}
 
         {/* Featured event card */}
-        <div className="bs-stream__card">
-          <div className="bs-stream__card-tag">
-            💬 {getText('弹幕事件', 'Chat Event')}
-          </div>
+        <div className={`bs-stream__card${event.tag ? ' bs-stream__card--special' : ''}`}>
+          {event.tag ? (
+            <div className="bs-stream__card-tag bs-stream__card-tag--special"
+                 style={{ color: event.tag.color, borderColor: event.tag.color }}>
+              {getText(event.tag.zh, event.tag.en)}
+            </div>
+          ) : (
+            <div className="bs-stream__card-tag">
+              💬 {getText('弹幕事件', 'Chat Event')}
+            </div>
+          )}
           <p className="bs-stream__card-text">
             {getText(event.textZh, event.textEn)}
           </p>

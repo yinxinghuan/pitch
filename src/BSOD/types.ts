@@ -95,6 +95,8 @@ export interface StreamEvent {
   textZh: string;
   textEn: string;
   choices: StreamChoice[];
+  /** Optional event type badge shown on the card (overrides generic "Chat Event" label) */
+  tag?: { zh: string; en: string; color?: string };
 }
 
 export interface StreamChoice {

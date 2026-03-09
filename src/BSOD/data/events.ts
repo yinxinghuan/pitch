@@ -676,6 +676,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   // ── Drama & pressure ────────────────────────────────────────────────────────
   {
     id: 's_hate_raid',
+    tag: { zh: '⚠ 恶意突袭', en: '⚠ HATE RAID', color: '#f87171' },
     textZh: '突然涌进来一群陌生账号，开始刷仇恨弹幕……',
     textEn: 'A wave of unknown accounts floods in, spamming hate comments...',
     choices: [
@@ -701,6 +702,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_algorithm',
+    tag: { zh: '🚀 算法推荐', en: '🚀 ALGORITHM BOOST', color: '#34d399' },
     textZh: '后台数据突然涨了——平台把你推上了推荐位！',
     textEn: 'Your backend stats spike — the platform just pushed you to the recommendation feed!',
     choices: [
@@ -720,6 +722,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_fanart',
+    tag: { zh: '🎨 粉丝同人', en: '🎨 FAN ART', color: '#a78bfa' },
     textZh: '有人在直播间贴了一张给你画的同人图……画得真的很好。',
     textEn: 'Someone posts fan art they drew of you in chat... it\'s actually really good.',
     choices: [
@@ -739,6 +742,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_big_donation',
+    tag: { zh: '💰 巨额打赏', en: '💰 MEGA DONATION', color: '#fbbf24' },
     textZh: '一笔超大额打赏进来，弹幕瞬间炸了……',
     textEn: 'A massive donation comes in. Chat instantly explodes...',
     choices: [
@@ -783,6 +787,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_trending',
+    tag: { zh: '🔥 上热榜了', en: '🔥 TRENDING', color: '#fb923c' },
     textZh: '有人说你的名字上了今日热榜！不知道是什么原因……',
     textEn: 'Someone says your name is on today\'s trending list! Not sure why...',
     choices: [
@@ -802,6 +807,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_sniping',
+    tag: { zh: '⚡ 大主播空降', en: '⚡ BIG STREAMER VISIT', color: '#38bdf8' },
     textZh: '一个粉丝数是你十倍的主播在直播间出现，弹幕瞬间乱了……',
     textEn: 'A streamer with 10x your followers just entered your chat. Things get chaotic...',
     choices: [
@@ -827,6 +833,7 @@ export const STREAM_EVENTS: StreamEvent[] = [
   },
   {
     id: 's_clip_viral',
+    tag: { zh: '🔥 片段爆了', en: '🔥 CLIP WENT VIRAL', color: '#fbbf24' },
     textZh: '有人把你五分钟前的精彩片段剪出来，短短几分钟播放量破万了……',
     textEn: 'Someone clipped your highlight from five minutes ago. It hit 10,000 views in minutes...',
     choices: [
