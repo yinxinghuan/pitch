@@ -12,34 +12,11 @@
     rgba(5, 10, 25, 0.75) 100%
   );
   animation: bs-event-in 0.25s ease forwards;
-
-  // ── Visitor character sprite ─────────────────────────────────────────────
-  &__visitor {
-    position: absolute;
-    left: -12px;
-    bottom: 0;
-    height: 68dvh;
-    width: auto;
-    object-fit: contain;
-    pointer-events: none;
-    z-index: 1;
-    filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.55));
-    animation: bs-event-visitor-in 0.35s ease forwards;
-  }
-
-  // Visitor name tag — shown in the card header when a visitor is present
-  &__visitor-name {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: rgba(96, 165, 250, 0.75);
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
+  overflow: visible; // allow visitor avatar to overflow above card
 
   &__card {
     width: 100%;
-    padding: 22px 20px 12px;
+    padding: 16px 20px 12px;
     background: rgba(8, 16, 38, 0.97);
     border-top: 1px solid rgba(96, 165, 250, 0.18);
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5);
@@ -60,6 +37,52 @@
         transparent
       );
     }
+  }
+
+  // ── Visitor header row ───────────────────────────────────────────────────
+  &__visitor-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 12px;
+    margin-top: -52px; // pull avatar above the card top edge
+    animation: bs-event-visitor-in 0.35s ease forwards;
+  }
+
+  // Circular avatar
+  &__visitor-avatar {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 3px solid rgba(96, 165, 250, 0.65);
+    box-shadow:
+      0 0 0 1px rgba(96, 165, 250, 0.18),
+      0 4px 24px rgba(0, 0, 0, 0.7);
+    background: rgba(8, 16, 38, 0.9);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      pointer-events: none;
+    }
+  }
+
+  // Visitor name tag
+  &__visitor-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: rgba(96, 165, 250, 0.9);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-bottom: 28px;
+    line-height: 1.8;
+    word-break: break-word;
+    white-space: normal;
   }
 
   &__text {
@@ -162,7 +185,7 @@
 }
 
 @keyframes bs-event-visitor-in {
-  from { opacity: 0; transform: translateX(-20px); }
+  from { opacity: 0; transform: translateX(-10px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 

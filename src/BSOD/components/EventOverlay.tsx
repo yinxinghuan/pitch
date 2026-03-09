@@ -13,19 +13,21 @@ const EventOverlay = React.memo(
   forwardRef<HTMLDivElement, Props>(function EventOverlay({ event, onChoice, onDismiss }, ref) {
     return (
       <div className="bs-event" ref={ref}>
-        {/* Visitor character sprite — left side */}
-        {event.visitorImg && (
-          <img
-            className="bs-event__visitor"
-            src={event.visitorImg}
-            alt={event.visitorName ?? ''}
-            draggable={false}
-          />
-        )}
-
         <div className="bs-event__card">
-          {event.visitorName && (
-            <div className="bs-event__visitor-name">{event.visitorName}</div>
+          {/* Visitor header — avatar + name */}
+          {event.visitorImg && (
+            <div className="bs-event__visitor-header">
+              <div className="bs-event__visitor-avatar">
+                <img
+                  src={event.visitorImg}
+                  alt={event.visitorName ?? ''}
+                  draggable={false}
+                />
+              </div>
+              {event.visitorName && (
+                <span className="bs-event__visitor-name">{event.visitorName}</span>
+              )}
+            </div>
           )}
           <p className="bs-event__text">{getText(event.textZh, event.textEn)}</p>
           {event.choices && event.choices.length > 0 ? (
