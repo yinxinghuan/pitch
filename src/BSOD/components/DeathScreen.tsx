@@ -11,11 +11,17 @@ import './DeathScreen.less';
 
 interface Props {
   cause: DeathCause;
-  statValue: number;
   deathContext: DeathContext | null;
   followers: number;
   onRestart: () => void;
 }
+
+const STAT_ZH: Record<DeathCause, string> = {
+  energy: '精力', mood: '心情', focus: '专注', followers: '粉丝',
+};
+const STAT_EN: Record<DeathCause, string> = {
+  energy: 'Energy', mood: 'Mood', focus: 'Focus', followers: 'Followers',
+};
 
 const CAUSE_ICON: Record<string, string> = {
   energy:    'z(>_<)z',
@@ -36,7 +42,9 @@ const CAUSE_COLOR: Record<string, string> = {
 };
 
 const DeathScreen = React.memo(
-  forwardRef<HTMLDivElement, Props>(function DeathScreen({ cause, statValue, deathContext, followers, onRestart }, ref) {
+  forwardRef<HTMLDivElement, Props>(function DeathScreen({ cause, deathContext, followers, onRestart }, ref) {
+    const color = CAUSE_COLOR[cause];
+    const displayVal = deathContext?.displayValue ?? 0;
     return (
       <div className={`bs-death bs-death--${cause}`} ref={ref}>
         <img className="bs-death__bg" src={bgDark} alt="" draggable={false} />
@@ -50,19 +58,16 @@ const DeathScreen = React.memo(
 
           <div className="bs-death__stat-cause">
             <img className="bs-death__stat-icon" src={CAUSE_STAT_ICON[cause]} alt="" draggable={false} />
-            <span className="bs-death__stat-val" style={{ color: CAUSE_COLOR[cause] }}>{statValue}</span>
+            <span className="bs-death__stat-val" style={{ color }}>{displayVal}</span>
           </div>
 
           {deathContext && (
-            <div className="bs-death__ctx">
-              <span className="bs-death__ctx-label">
-                {getText(deathContext.labelZh, deathContext.labelEn)}
-              </span>
-              <span className="bs-death__ctx-delta" style={{ color: CAUSE_COLOR[cause] }}>
-                <img className="bs-death__stat-icon" src={CAUSE_STAT_ICON[cause]} alt="" draggable={false} />
-                {deathContext.delta > 0 ? '+' : ''}{deathContext.delta}
-              </span>
-            </div>
+            <p className="bs-death__ctx" style={{ color }}>
+              {getText(
+                `${deathContext.labelZh}，${STAT_ZH[cause]} ${deathContext.delta}`,
+                `${deathContext.labelEn} — ${STAT_EN[cause]} ${deathContext.delta}`
+              )}
+            </p>
           )}
 
           <p className="bs-death__desc">{t(`deathDesc_${cause}`)}</p>

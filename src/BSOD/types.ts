@@ -24,6 +24,8 @@ export interface DeathContext {
   labelEn: string;
   /** The delta of the death-causing stat from the fatal action (negative for deductions) */
   delta: number;
+  /** Unclamped final value of the causing stat (can be negative, e.g. -15) */
+  displayValue: number;
 }
 
 export type EndingType = 'online' | 'offline' | 'restart' | 'bsod';

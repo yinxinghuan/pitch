@@ -179,11 +179,6 @@ const BSOD = React.memo(
           <DeathScreen
             cause={state.deathCause}
             deathContext={state.deathContext}
-            statValue={
-              state.deathCause === 'energy' ? energy :
-              state.deathCause === 'mood'   ? mood   :
-              state.deathCause === 'focus'  ? focus  : followers
-            }
             followers={followers}
             onRestart={sfx.restart}
           />

@@ -64,6 +64,13 @@ function deathDelta(effect: StatEffect, cause: DeathCause): number {
   return effect.followers ?? 0;
 }
 
+function preStat(s: GameState, cause: DeathCause): number {
+  if (cause === 'energy')    return s.energy;
+  if (cause === 'mood')      return s.mood;
+  if (cause === 'focus')     return s.focus;
+  return s.followers;
+}
+
 function checkDeath(state: GameState): DeathCause | null {
   if (state.energy <= 0) return 'energy';
   if (state.mood <= 0) return 'mood';
@@ -114,6 +121,7 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
 
   // Daily drain at morning start
   if (phase === 'morning') {
+    const preDrain = { energy: next.energy, mood: next.mood, focus: next.focus, followers: next.followers };
     next = {
       ...next,
       energy: clamp(next.energy + DAILY_DRAIN.energy),
@@ -129,10 +137,10 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
       },
     };
     const death = checkDeath(next);
-    if (death) return { ...next, phase: 'dead', deathCause: death, deathContext: {
+    if (death) { const d = deathDelta(DAILY_DRAIN, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
       labelZh: '每日消耗', labelEn: 'Daily drain',
-      delta: deathDelta(DAILY_DRAIN, death),
-    }};
+      delta: d, displayValue: preDrain[death] + d,
+    }}; }
   }
 
   // Check for story event
@@ -164,10 +172,10 @@ export function useBSOD() {
       if (s.phase !== 'event' || !s.pendingEvent) return s;
       let next = applyEffect(s, choice.effect);
       const death = checkDeath(next);
-      if (death) return { ...next, phase: 'dead', deathCause: death, deathContext: {
+      if (death) { const d = deathDelta(choice.effect, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
         labelZh: choice.labelZh, labelEn: choice.labelEn,
-        delta: deathDelta(choice.effect, death),
-      }};
+        delta: d, displayValue: preStat(s, death) + d,
+      }}; }
       // Return to the phase this event triggered in
       return enterPhase({ ...next, pendingEvent: null }, s.prevPhase);
     });
@@ -221,10 +229,10 @@ export function useBSOD() {
 
       let next = applyEffect({ ...s, lastAction: null }, action.effect);
       const death = checkDeath(next);
-      if (death) return { ...next, phase: 'dead', deathCause: death, deathContext: {
+      if (death) { const d = deathDelta(action.effect, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
         labelZh: action.labelZh, labelEn: action.labelEn,
-        delta: deathDelta(action.effect, death),
-      }};
+        delta: d, displayValue: preStat(s, death) + d,
+      }}; }
 
       return advancePhase(next, currentPhase);
     });
@@ -276,10 +284,10 @@ export function useBSOD() {
       }
 
       const death = checkDeath(next);
-      if (death) return { ...next, phase: 'dead', deathCause: death, deathContext: {
+      if (death) { const d = deathDelta(moodedEffect, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
         labelZh: choice.labelZh, labelEn: choice.labelEn,
-        delta: deathDelta(moodedEffect, death),
-      }};
+        delta: d, displayValue: preStat(s, death) + d,
+      }}; }
 
       const gained = next.followers - s.followers;
       const lastEvent = moodedEffect.followers
