@@ -28,7 +28,7 @@ export interface DeathContext {
   displayValue: number;
 }
 
-export type EndingType = 'online' | 'offline' | 'restart' | 'bsod';
+export type EndingType = 'online' | 'offline' | 'restart' | 'bsod' | 'burnout' | 'cult_hero' | 'hollow_viral';
 
 export type LaisaEmotion = 'normal' | 'happy' | 'sad' | 'surprised' | 'tired' | 'focused';
 

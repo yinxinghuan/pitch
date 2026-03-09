@@ -9,6 +9,8 @@ import laisaHappy     from '../img/laisa_happy.png';
 import laisaIdle      from '../img/laisa_idle.png';
 import laisaFocused   from '../img/laisa_focused.png';
 import laisaSad       from '../img/laisa_sad.png';
+import laisaTired     from '../img/laisa_tired.png';
+import laisaSurprised from '../img/laisa_surprised.png';
 import NoiseCanvas from './NoiseCanvas';
 import './EndingScreen.less';
 
@@ -19,18 +21,24 @@ interface Props {
   onRestart: () => void;
 }
 
-const ENDING_BG: Record<string, string> = {
-  online:  bgOnline,
-  offline: bgOffline,
-  restart: bgRestart,
-  bsod:    bgBsodRoom,
+const ENDING_BG: Record<EndingType, string> = {
+  online:       bgOnline,
+  offline:      bgOffline,
+  restart:      bgRestart,
+  bsod:         bgBsodRoom,
+  burnout:      bgOnline,
+  cult_hero:    bgRestart,
+  hollow_viral: bgOffline,
 };
 
 const ENDING_LAISA: Record<EndingType, string> = {
-  online:  laisaHappy,
-  offline: laisaIdle,
-  restart: laisaFocused,
-  bsod:    laisaSad,
+  online:       laisaHappy,
+  offline:      laisaIdle,
+  restart:      laisaFocused,
+  bsod:         laisaSad,
+  burnout:      laisaTired,
+  cult_hero:    laisaSurprised,
+  hollow_viral: laisaSad,
 };
 
 const EndingScreen = React.memo(

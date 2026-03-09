@@ -84,7 +84,12 @@ function checkDeath(state: GameState): DeathCause | null {
 }
 
 function calcEnding(state: GameState): EndingType {
-  const { followers, connection } = state;
+  const { followers, connection, energy, mood } = state;
+  // Specific conditions checked first
+  if (followers > 10000 && connection >= 8 && (energy < 15 || mood < 15)) return 'burnout';
+  if (connection >= 9 && followers <= 5000) return 'cult_hero';
+  if (followers > 20000 && connection <= 2) return 'hollow_viral';
+  // General conditions
   if (followers > 10000 && connection >= 8) return 'online';
   if (followers > 10000) return 'offline';
   if (connection >= 8) return 'restart';
