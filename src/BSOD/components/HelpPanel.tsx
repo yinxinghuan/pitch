@@ -64,6 +64,17 @@ const HelpPanel = React.memo(
             <TimeSegment label="NIGHT" color="#7aaa60" desc={getText('深夜 — 一天结束，补充体力准备明天', 'Night — day wraps up, recover and prepare for tomorrow')} />
           </div>
 
+          {/* Daily drain */}
+          <div className="bs-help__section-label">
+            {getText('每日消耗（每天早晨扣除）', 'DAILY DRAIN (deducted each morning)')}
+          </div>
+          <div className="bs-help__drain">
+            <DrainRow icon={iconEnergy}    color="var(--bs-energy)"    value={-12} />
+            <DrainRow icon={iconMood}      color="var(--bs-mood)"      value={-15} />
+            <DrainRow icon={iconFocus}     color="var(--bs-focus)"     value={-5} />
+            <DrainRow icon={iconFollowers} color="var(--bs-followers)" value={-40} />
+          </div>
+
           <p className="bs-help__tip">
             {getText(
               '💡 三项数值任意归零，或13天结束时粉丝为零，直播生涯结束。',
@@ -87,6 +98,16 @@ function HelpStat({ icon, color, name, desc }: {
         <span className="bs-help__stat-name" style={{ color }}>{name}</span>
         <span className="bs-help__stat-desc">{desc}</span>
       </div>
+    </div>
+  );
+}
+
+function DrainRow({ icon, color, value }: { icon: string; color: string; value: number }) {
+  return (
+    <div className="bs-help__drain-row">
+      <img className="bs-help__stat-icon" src={icon} alt="" draggable={false}
+           style={{ filter: `drop-shadow(0 0 4px ${color})` }} />
+      <span className="bs-help__drain-val" style={{ color }}>{value}</span>
     </div>
   );
 }
