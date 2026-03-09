@@ -35,6 +35,7 @@
   &__content {
     position: absolute;
     bottom: 0;
+    z-index: 2;
     left: 0;
     right: 0;
     padding: 24px 24px 36px;
@@ -111,23 +112,37 @@
     display: block;
     width: 100%;
     text-align: center;
-    padding: 13px;
-    margin-top: 4px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-radius: 8px;
-    font-size: 14px;
-    color: rgba(148, 163, 184, 0.8);
-    font-family: 'Noto Sans SC', sans-serif;
+    box-sizing: border-box;
+    padding: 12px 0 20px;
+    margin-top: 8px;
+    background: #e8c050;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #281408;
+    letter-spacing: 0.05em;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     touch-action: none;
-    transition: background 0.12s, border-color 0.12s;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 10px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(255, 240, 160, 0.4) 0, rgba(255, 240, 160, 0.4) 2px, transparent 2px),
+        repeating-conic-gradient(#a87820 0% 25%, #e8c050 0% 50%) 0 0 / 4px 4px;
+    }
 
     &:active {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(148, 163, 184, 0.4);
+      transform: translateY(4px);
+      &::after { height: 4px; }
     }
   }
 
@@ -143,6 +158,7 @@
   &__bsod-panel {
     position: absolute;
     inset: 0;
+    z-index: 2;
     background: rgba(0, 120, 215, 0.92);
     display: flex;
     flex-direction: column;
@@ -199,21 +215,41 @@
 
   &__bsod-btn {
     all: unset;
-    display: inline-block;
-    margin-top: 12px;
-    padding: 10px 22px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    font-size: 13px;
-    color: #fff;
-    font-family: 'Noto Sans SC', sans-serif;
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 16px;
+    padding: 12px 0 20px;
+    background: #e8c050;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #281408;
+    letter-spacing: 0.05em;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     touch-action: none;
+    position: relative;
+    overflow: hidden;
 
-    &:active { background: rgba(255, 255, 255, 0.25); }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 10px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(255, 240, 160, 0.4) 0, rgba(255, 240, 160, 0.4) 2px, transparent 2px),
+        repeating-conic-gradient(#a87820 0% 25%, #e8c050 0% 50%) 0 0 / 4px 4px;
+    }
+
+    &:active {
+      transform: translateY(4px);
+      &::after { height: 4px; }
+    }
   }
 }
 

@@ -251,7 +251,7 @@ const BSOD = React.memo(
 
         {/* Laisa character sprite — only during events / big stat changes */}
         {laisaVisible && (
-          <div className="bs__char-area">
+          <div className={`bs__char-area${phase === 'actionResult' ? ' bs__char-area--front' : ''}`}>
             <img
               className="bs__char"
               src={laisaSrc}
