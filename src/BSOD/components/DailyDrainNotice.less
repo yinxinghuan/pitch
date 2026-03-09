@@ -1,0 +1,102 @@
+.bs-drain-notice {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 6, 14, 0.65);
+  backdrop-filter: blur(2px);
+  animation: bs-dn-fade-in 0.2s ease forwards;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 28px 18px;
+    background: #1a1c26;
+    border: 2px solid rgba(180, 190, 210, 0.12);
+    border-radius: 6px;
+    box-shadow: 0 6px 0 #0a0c14, 0 0 40px rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+  }
+
+  &__label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: rgba(180, 190, 210, 0.45);
+    letter-spacing: 0.12em;
+    margin: 0 0 4px;
+  }
+
+  &__rows {
+    display: flex;
+    gap: 12px;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    animation: bs-dn-row-in 0.22s ease both;
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    pointer-events: none;
+  }
+
+  &__val {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  &__btn {
+    all: unset;
+    margin-top: 8px;
+    padding: 8px 24px 14px;
+    background: #232535;
+    border: 2px solid rgba(180, 190, 210, 0.15);
+    border-radius: 3px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: rgba(180, 190, 210, 0.6);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.06s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8px;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    &:active {
+      transform: translateY(3px);
+      &::after { height: 3px; }
+    }
+  }
+}
+
+@keyframes bs-dn-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bs-dn-row-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -137,6 +137,7 @@ export interface GameState {
   streamPendingEnd: boolean;       // last event chosen, waiting for player to confirm
   dayLogStart: GameStats;          // stats snapshot at day start (for delta)
   streamedToday: boolean;
+  showDrainNotice: boolean;
   deathCause: DeathCause | null;
   deathContext: DeathContext | null;
   endingType: EndingType | null;

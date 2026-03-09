@@ -12,6 +12,7 @@ import ActionResultScreen from './components/ActionResultScreen';
 import SplashScreen from './components/SplashScreen';
 import NoiseCanvas from './components/NoiseCanvas';
 import HelpPanel from './components/HelpPanel';
+import DailyDrainNotice from './components/DailyDrainNotice';
 import bgRoom from './img/bg_room.png';
 import laisaIdle from './img/laisa_idle.png';
 import laisaHappy from './img/laisa_happy.png';
@@ -279,6 +280,11 @@ const BSOD = React.memo(
             action={state.lastAction}
             onDismiss={sfx.dismissActionResult}
           />
+        )}
+
+        {/* Daily drain notice */}
+        {state.showDrainNotice && (
+          <DailyDrainNotice onDismiss={actions.dismissDrainNotice} />
         )}
 
         {/* Story event overlay */}

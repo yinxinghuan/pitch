@@ -110,6 +110,7 @@ function initialState(): GameState {
     streamPendingEnd: false,
     dayLogStart: { ...INITIAL_STATS },
     streamedToday: false,
+    showDrainNotice: false,
     deathCause: null,
     deathContext: null,
     endingType: null,
@@ -141,6 +142,7 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
       labelZh: '每日消耗', labelEn: 'Daily drain',
       delta: d, displayValue: preDrain[death] + d,
     }}; }
+    next = { ...next, showDrainNotice: true };
   }
 
   // Check for story event
@@ -322,6 +324,10 @@ export function useBSOD() {
     });
   }, []);
 
+  const dismissDrainNotice = useCallback(() => {
+    setState(s => ({ ...s, showDrainNotice: false }));
+  }, []);
+
   const restart = useCallback(() => {
     setState(initialState());
   }, []);
@@ -337,6 +343,7 @@ export function useBSOD() {
       chooseStreamOption,
       confirmStreamEnd,
       confirmDayEnd,
+      dismissDrainNotice,
       restart,
     },
     // Derived helpers
