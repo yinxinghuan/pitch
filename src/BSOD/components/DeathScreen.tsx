@@ -12,10 +12,10 @@ interface Props {
 }
 
 const CAUSE_ICON: Record<string, string> = {
-  energy:    '💤',
-  mood:      '🌑',
-  followers: '📉',
-  focus:     '🔲',
+  energy:    'z(>_<)z',
+  mood:      '(╥_╥)',
+  followers: '(ﾟДﾟ)',
+  focus:     '(;´Д｀)',
 };
 
 const DeathScreen = React.memo(
@@ -27,7 +27,7 @@ const DeathScreen = React.memo(
         <div className="bs-death__overlay" />
 
         <div className="bs-death__inner">
-          <div className="bs-death__icon">{CAUSE_ICON[cause]}</div>
+          <div className="bs-death__icon" data-text={CAUSE_ICON[cause]}>{CAUSE_ICON[cause]}</div>
           <h2 className="bs-death__title">{t(`deathTitle_${cause}`)}</h2>
           <p className="bs-death__desc">{t(`deathDesc_${cause}`)}</p>
           <p className="bs-death__followers">
