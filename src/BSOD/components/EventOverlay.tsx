@@ -37,7 +37,7 @@ const EventOverlay = React.memo(
 
     return (
       <div className="bs-event" ref={ref}>
-        <div className="bs-event__card">
+        <div className="bs-event__card" onPointerDown={feedback ? handleFeedbackDismiss : undefined}>
           {/* Visitor header — avatar + name */}
           {event.visitorImg && (
             <div className="bs-event__visitor-header">
@@ -57,7 +57,7 @@ const EventOverlay = React.memo(
 
           {/* Stat delta feedback — shown after a choice is made */}
           {feedback ? (
-            <div className="bs-event__feedback" onPointerDown={handleFeedbackDismiss}>
+            <div className="bs-event__feedback">
               <div className="bs-event__feedback-pills">
                 {STAT_ICONS.map(({ key, icon }) => {
                   const v = feedback.effect[key] as number | undefined;
