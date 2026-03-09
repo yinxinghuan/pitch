@@ -13,9 +13,9 @@ interface Props {
 
 const CAUSE_ICON: Record<string, string> = {
   energy:    'z(>_<)z',
-  mood:      '(╥_╥)',
-  followers: '(ﾟДﾟ)',
-  focus:     '(;´Д｀)',
+  mood:      '(T_T)',
+  followers: '(X_X)',
+  focus:     '(@_@)',
 };
 
 const DeathScreen = React.memo(
