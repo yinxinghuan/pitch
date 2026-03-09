@@ -28,6 +28,23 @@ function clamp(v: number, min = 0, max = 100): number {
   return Math.max(min, Math.min(max, v));
 }
 
+// Adds viral / crash volatility to raw follower deltas.
+// Gains:  4% viral (5-10x) · 10% boost (1.8-2.8x) · 12% flop (0.3-0.6x) · 74% normal
+// Losses: 7% controversy (3-5x) · 93% normal
+export function volatileFollowers(base: number): number {
+  if (base === 0) return 0;
+  const r = Math.random();
+  if (base > 0) {
+    if (r < 0.04) return Math.round(base * (5 + Math.random() * 5));   // viral 5–10x
+    if (r < 0.14) return Math.round(base * (1.8 + Math.random()));      // boost 1.8–2.8x
+    if (r < 0.26) return Math.round(base * (0.3 + Math.random() * 0.3)); // flop 0.3–0.6x
+    return base;
+  } else {
+    if (r < 0.07) return Math.round(base * (3 + Math.random() * 2));   // controversy 3–5x
+    return base;
+  }
+}
+
 function applyEffect(state: GameState, effect: StatEffect): GameState {
   return {
     ...state,
@@ -150,11 +167,15 @@ export function useBSOD() {
     setState(s => {
       const currentPhase = s.phase as ActionPhase;
       if (!PHASE_ORDER.includes(currentPhase)) return s;
-      // Show action result screen first, then advance phase on dismiss
+      // Apply follower volatility now so ActionResultScreen shows the real number
+      const volatileAction: GameAction =
+        action.effect.followers
+          ? { ...action, effect: { ...action.effect, followers: volatileFollowers(action.effect.followers) } }
+          : action;
       return {
         ...s,
         phase: 'actionResult' as Phase,
-        lastAction: action,
+        lastAction: volatileAction,
         prevPhase: currentPhase,
       };
     });
@@ -196,8 +217,14 @@ export function useBSOD() {
       const choice = event.choices[choiceIndex];
       if (!choice) return s;
 
+      // Apply follower volatility to stream choices
+      const volatileEffect: typeof choice.effect =
+        choice.effect.followers
+          ? { ...choice.effect, followers: volatileFollowers(choice.effect.followers) }
+          : choice.effect;
+
       // Apply base effect
-      let next = applyEffect(s, choice.effect);
+      let next = applyEffect(s, volatileEffect);
 
       // Speed bonus/penalty applied to followers only
       const speedBonus: Record<ResponseSpeed, number> = {
@@ -207,8 +234,8 @@ export function useBSOD() {
         timeout: -1.0,  // -100% followers gain + mood penalty
       };
       const bonus = speedBonus[speed];
-      if (bonus !== 0 && choice.effect.followers) {
-        const extra = Math.round(choice.effect.followers * Math.abs(bonus));
+      if (bonus !== 0 && volatileEffect.followers) {
+        const extra = Math.round(volatileEffect.followers * Math.abs(bonus));
         next = applyEffect(next, {
           followers: bonus > 0 ? extra : -extra,
           mood: speed === 'timeout' ? -5 : 0,
