@@ -48,6 +48,23 @@ const ActionPanel = React.memo(
 
     return (
       <div className="bs-actions" ref={ref}>
+        {expanded && (
+          <div className={`bs-actions__list-wrap${noScroll ? ' bs-actions__list-wrap--no-scroll' : ''}`}>
+            <div className="bs-actions__list" ref={listRef}>
+              {regularActions.map(action => (
+                <button key={action.id} className="bs-card" onPointerDown={() => handleChoose(action)}>
+                  <span className="bs-card__name">
+                    {getText(action.labelZh, action.labelEn)}
+                  </span>
+                  <div className="bs-card__fx">
+                    {renderFx(action.effect)}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="bs-actions__btns">
           <button
             className={`bs-btn bs-btn--live ${!streamAction ? 'bs-btn--live-off' : ''}`}
@@ -65,23 +82,6 @@ const ActionPanel = React.memo(
             {expanded ? 'CLOSE' : 'ACTIONS'}
           </button>
         </div>
-
-        {expanded && (
-          <div className={`bs-actions__list-wrap${noScroll ? ' bs-actions__list-wrap--no-scroll' : ''}`}>
-            <div className="bs-actions__list" ref={listRef}>
-              {regularActions.map(action => (
-                <button key={action.id} className="bs-card" onPointerDown={() => handleChoose(action)}>
-                  <span className="bs-card__name">
-                    {getText(action.labelZh, action.labelEn)}
-                  </span>
-                  <div className="bs-card__fx">
-                    {renderFx(action.effect)}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     );
   })
