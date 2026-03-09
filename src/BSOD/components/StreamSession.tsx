@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import type { StreamEvent, ResponseSpeed, VolatileType } from '../types';
+import { getText } from '../i18n';
 import bgStream from '../img/bg_stream.png';
 import './StreamSession.less';
 
@@ -108,10 +109,10 @@ const StreamSession = React.memo(
     const progress = remaining / TIMER_TOTAL; // 1 → 0
     const timerColor = progress > 0.625 ? '#4ade80' : progress > 0.25 ? '#fbbf24' : '#f87171';
     const speedHint = elapsed < FAST_THRESHOLD
-      ? 'Fast reply ×1.5 followers'
+      ? getText('快速回应 ×1.5 粉丝', 'Fast reply ×1.5 followers')
       : elapsed < SLOW_THRESHOLD
-        ? 'Responding…'
-        : 'Chat is going cold…';
+        ? getText('回应中…', 'Responding…')
+        : getText('观众在流失…', 'Chat is going cold…');
 
     // Render the volatile flash overlay
     const flashConfig = flash ? VOLATILE_CONFIG[flash.type] : null;
@@ -166,10 +167,10 @@ const StreamSession = React.memo(
         {/* Featured event card */}
         <div className="bs-stream__card">
           <div className="bs-stream__card-tag">
-            💬 Chat Event
+            💬 {getText('弹幕事件', 'Chat Event')}
           </div>
           <p className="bs-stream__card-text">
-            {event.textEn}
+            {getText(event.textZh, event.textEn)}
           </p>
 
           {/* Timer bar */}
@@ -179,7 +180,7 @@ const StreamSession = React.memo(
               style={{ width: `${progress * 100}%`, background: timerColor }}
             />
             <span className="bs-stream__timer-hint" style={{ color: timerColor }}>
-              {timedOut ? 'Timed out…' : speedHint}
+              {timedOut ? getText('超时…', 'Timed out…') : speedHint}
             </span>
           </div>
 
@@ -192,7 +193,7 @@ const StreamSession = React.memo(
                 onPointerDown={() => handleChoose(i)}
                 disabled={timedOut}
               >
-                {c.labelEn}
+                {getText(c.labelZh, c.labelEn)}
               </button>
             ))}
           </div>

@@ -1,5 +1,13 @@
 import type { StoryEvent, StreamEvent } from '../types';
 
+// ── Visitor sprites ───────────────────────────────────────────────────────────
+import algram_normal     from '../img/visitors/algram_normal.png';
+import algram_happy      from '../img/visitors/algram_happy.png';
+import ghostpixel_normal from '../img/visitors/ghostpixel_normal.png';
+import jmf_normal        from '../img/visitors/jmf_normal.png';
+import jenny_normal      from '../img/visitors/jenny_normal.png';
+import isabel_normal     from '../img/visitors/isabel_normal.png';
+
 // ── Story Events ─────────────────────────────────────────────────────────────
 // Triggered at phase start on specific days.
 
@@ -261,6 +269,159 @@ export const STORY_EVENTS: StoryEvent[] = [
       },
     ],
   },
+  // ── Visitor events ─────────────────────────────────────────────────────────
+  {
+    id: 'visit_ghostpixel_d2',
+    day: 2,
+    phase: 'afternoon',
+    textEn: 'ghostpixel shows up unannounced. He says he just happened to be in the area. He probably wasn\'t.\n\n"I can help test your audio setup if you want. Or I can just sit here and not say anything. Either is fine."',
+    textZh: 'ghostpixel 出现在门口。他说自己只是路过。大概不是。\n\n"你要的话我可以帮你测一下音频。或者我就坐着不说话。都行。"',
+    laisaEmotion: 'surprised',
+    visitorImg: ghostpixel_normal,
+    visitorName: 'ghostpixel',
+    choices: [
+      {
+        labelEn: 'Let him test the setup together',
+        labelZh: '一起调试音频',
+        effect: { focus: 12, mood: 10 },
+        emotion: 'happy',
+      },
+      {
+        labelEn: 'Just hang out for a bit',
+        labelZh: '就坐着聊聊',
+        effect: { mood: 18, energy: 5 },
+        emotion: 'happy',
+      },
+    ],
+  },
+  {
+    id: 'visit_algram_d4',
+    day: 4,
+    phase: 'afternoon',
+    textEn: 'Algram shows up with his guitar. He heard you\'ve been streaming and wanted to see your setup.\n\n"Can I play something while you get ready? Like... background music? Or would that be annoying."',
+    textZh: 'Algram 背着吉他来了。他听说你在做直播，想来看看你的设备。\n\n"我能弹点什么吗，你准备的时候听？就当背景音乐？或者你嫌烦的话也行。"',
+    laisaEmotion: 'happy',
+    visitorImg: algram_happy,
+    visitorName: 'Algram',
+    choices: [
+      {
+        labelEn: 'Yes please, put something on',
+        labelZh: '可以，弹点什么吧',
+        effect: { mood: 22, energy: 10, focus: -5 },
+        emotion: 'happy',
+      },
+      {
+        labelEn: 'Maybe just a quick chat instead',
+        labelZh: '算了，聊几句就行',
+        effect: { mood: 12, focus: 8 },
+        emotion: 'normal',
+      },
+    ],
+  },
+  {
+    id: 'visit_isabel_d6',
+    day: 6,
+    phase: 'evening',
+    textEn: 'Isabel appears at the door holding a container of food.\n\n"I made too much. You\'re going to eat this whether you like it or not."\n\nShe looks around your room and doesn\'t say anything about the mess.',
+    textZh: 'Isabel 站在门口，手里提着一个饭盒。\n\n"我做多了。不管你喜不喜欢你都得吃。"\n\n她扫了一眼你的房间，对那堆乱没有说什么。',
+    laisaEmotion: 'surprised',
+    visitorImg: isabel_normal,
+    visitorName: 'Isabel',
+    choices: [
+      {
+        labelEn: 'Eat together before the stream',
+        labelZh: '开播前一起吃',
+        effect: { energy: 22, mood: 20, focus: -5 },
+        emotion: 'happy',
+      },
+      {
+        labelEn: 'Thank her and eat at the desk',
+        labelZh: '谢谢，在桌子上边吃边准备',
+        effect: { energy: 15, mood: 10 },
+        emotion: 'normal',
+      },
+    ],
+  },
+  {
+    id: 'visit_jmf_d8',
+    day: 8,
+    phase: 'morning',
+    textEn: 'JM·F comes by. He says he wanted to see how things were going.\n\nHe looks at your monitor, your mic position, your cable management, and sighs once — not unkindly.\n\n"You know there are ways to reduce the latency."',
+    textZh: 'JM·F 来了。说想来看看情况。\n\n他扫了一眼你的显示器、麦克风位置、走线，叹了一口气——不是那种嫌弃，但意思差不多。\n\n"你知道有办法降低延迟的。"',
+    laisaEmotion: 'surprised',
+    visitorImg: jmf_normal,
+    visitorName: 'JM·F',
+    choices: [
+      {
+        labelEn: 'Ask him to show you everything',
+        labelZh: '请他把所有问题都说出来',
+        effect: { focus: 18, followers: 40, energy: -8 },
+        emotion: 'focused',
+      },
+      {
+        labelEn: 'Take note of a few things, but keep it short',
+        labelZh: '记下几点，但不要太久',
+        effect: { focus: 10, mood: 5 },
+        emotion: 'normal',
+      },
+      {
+        labelEn: '"My setup is fine, thanks"',
+        labelZh: '"设备没问题，谢了"',
+        effect: { mood: -8, focus: 5 },
+        emotion: 'normal',
+      },
+    ],
+  },
+  {
+    id: 'visit_jenny_d10',
+    day: 10,
+    phase: 'afternoon',
+    textEn: 'Jenny shows up with two coffees. She says she was in the area doing research.\n\n"I\'ve been watching some of your streams. Can I ask — what do you think about when you\'re live? Like, actually."',
+    textZh: 'Jenny 带着两杯咖啡出现了。说在附近查资料。\n\n"我看了你几场直播。能问一下——你开播的时候脑子里在想什么？认真问。"',
+    laisaEmotion: 'surprised',
+    visitorImg: jenny_normal,
+    visitorName: 'Jenny',
+    choices: [
+      {
+        labelEn: 'Talk it through properly — it\'s a real question',
+        labelZh: '认真聊，这是个好问题',
+        effect: { mood: 18, connection: 1, energy: -8 },
+        emotion: 'normal',
+      },
+      {
+        labelEn: 'Give a short answer and get back to prep',
+        labelZh: '简短回答，还有事要准备',
+        effect: { focus: 12, energy: 5 },
+        emotion: 'normal',
+      },
+    ],
+  },
+  {
+    id: 'visit_both_d12',
+    day: 12,
+    phase: 'afternoon',
+    textEn: 'Algram and ghostpixel show up at the same time. They claim it wasn\'t planned.\n\n"One more day," Algram says.\nghostpixel nods.\n\nNeither of them says anything else. They don\'t need to.',
+    textZh: 'Algram 和 ghostpixel 同时出现在门口。他们说不是约好的。\n\n"还有一天，" Algram 说。\nghostpixel 点点头。\n\n两人都没再说什么。不需要。',
+    laisaEmotion: 'happy',
+    visitorImg: algram_normal,
+    visitorName: 'Algram & ghostpixel',
+    choices: [
+      {
+        labelEn: 'Stay for a while — you need this',
+        labelZh: '让他们待一会儿，你需要这个',
+        effect: { mood: 28, energy: 10, connection: 1, focus: -8 },
+        emotion: 'happy',
+      },
+      {
+        labelEn: 'Short goodbye — big day tomorrow',
+        labelZh: '简短道别，明天是重要的一天',
+        effect: { mood: 18, focus: 10 },
+        emotion: 'normal',
+      },
+    ],
+  },
+
+  // ── End visitor events ──────────────────────────────────────────────────────
   {
     id: 'day13_morning',
     day: 13,

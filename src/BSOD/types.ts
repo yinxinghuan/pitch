@@ -66,6 +66,10 @@ export interface StoryEvent {
   textEn: string;
   laisaEmotion?: LaisaEmotion;
   choices?: StoryChoice[];
+  /** Visitor character sprite shown on the left during this event */
+  visitorImg?: string;
+  /** Visitor's display name shown above the event card */
+  visitorName?: string;
 }
 
 export interface StoryChoice {

@@ -4,6 +4,7 @@
   z-index: 50;
   display: flex;
   align-items: flex-end;
+  overflow: hidden;
   background: linear-gradient(to bottom,
     transparent 0%,
     transparent 45%,
@@ -11,6 +12,30 @@
     rgba(5, 10, 25, 0.75) 100%
   );
   animation: bs-event-in 0.25s ease forwards;
+
+  // ── Visitor character sprite ─────────────────────────────────────────────
+  &__visitor {
+    position: absolute;
+    left: -12px;
+    bottom: 0;
+    height: 68dvh;
+    width: auto;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.55));
+    animation: bs-event-visitor-in 0.35s ease forwards;
+  }
+
+  // Visitor name tag — shown in the card header when a visitor is present
+  &__visitor-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: rgba(96, 165, 250, 0.75);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
 
   &__card {
     width: 100%;
@@ -134,6 +159,11 @@
 @keyframes bs-event-in {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+@keyframes bs-event-visitor-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes bs-event-text-in {
