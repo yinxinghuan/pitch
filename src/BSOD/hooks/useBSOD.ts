@@ -120,8 +120,8 @@ function initialState(): GameState {
 function enterPhase(state: GameState, phase: ActionPhase): GameState {
   let next = { ...state, phase: phase as Phase, prevPhase: phase };
 
-  // Daily drain at morning start
-  if (phase === 'morning') {
+  // Daily drain at morning start — skip Day 1 (game just started)
+  if (phase === 'morning' && next.day > 1) {
     const preDrain = { energy: next.energy, mood: next.mood, focus: next.focus, followers: next.followers };
     next = {
       ...next,
