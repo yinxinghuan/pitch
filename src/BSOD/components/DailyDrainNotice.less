@@ -5,98 +5,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(4, 6, 14, 0.65);
-  backdrop-filter: blur(2px);
-  animation: bs-dn-fade-in 0.2s ease forwards;
+  pointer-events: none;
 
-  &__card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 20px 28px 18px;
-    background: #1a1c26;
-    border: 2px solid rgba(180, 190, 210, 0.12);
-    border-radius: 6px;
-    box-shadow: 0 6px 0 #0a0c14, 0 0 40px rgba(0, 0, 0, 0.7);
-    pointer-events: all;
-  }
-
-  &__label {
+  &__text {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: rgba(180, 190, 210, 0.45);
-    letter-spacing: 0.12em;
-    margin: 0 0 4px;
-  }
-
-  &__rows {
-    display: flex;
-    gap: 12px;
-  }
-
-  &__row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    animation: bs-dn-row-in 0.22s ease both;
-  }
-
-  &__icon {
-    width: 32px;
-    height: 32px;
-    image-rendering: pixelated;
-    pointer-events: none;
-  }
-
-  &__val {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 13px;
-    line-height: 1;
-  }
-
-  &__btn {
-    all: unset;
-    margin-top: 8px;
-    padding: 8px 24px 14px;
-    background: #232535;
-    border: 2px solid rgba(180, 190, 210, 0.15);
-    border-radius: 3px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: rgba(180, 190, 210, 0.6);
+    font-size: 20px;
+    color: #c8d8ff;
     letter-spacing: 0.08em;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    touch-action: none;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.06s;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 8px;
-      pointer-events: none;
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    &:active {
-      transform: translateY(3px);
-      &::after { height: 3px; }
-    }
+    text-align: center;
+    text-shadow:
+      0 0 12px rgba(100, 160, 255, 0.9),
+      0 0 30px rgba(60, 120, 255, 0.55),
+      0 0 60px rgba(40, 80, 220, 0.3);
+    animation: bs-dn-in 0.35s ease forwards, bs-dn-out 0.35s ease 1.2s forwards;
   }
 }
 
-@keyframes bs-dn-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+@keyframes bs-dn-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-@keyframes bs-dn-row-in {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes bs-dn-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.06); }
 }

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import iconEnergy from '../img/icon_energy.png';
 import iconMood from '../img/icon_mood.png';
 import iconFocus from '../img/icon_focus.png';
@@ -14,6 +14,10 @@ interface Props {
   phase: string;
   streamedToday: boolean;
   onHelpOpen: () => void;
+  /** Pre-drain snapshot — when provided, animate each stat from these values down to current */
+  drainFrom?: { energy: number; mood: number; focus: number; followers: number };
+  /** Called after all 4 drain animations complete */
+  onDrainAnimEnd?: () => void;
 }
 
 const DAY_PHASES = ['morning', 'afternoon', 'evening', 'night'] as const;
@@ -27,15 +31,75 @@ const PHASE_FILL: Record<string, number> = {
   morning: 0, afternoon: 33, evening: 66, night: 100, stream: 66,
 };
 
+const STAT_DUR_MS = 320; // duration per stat countdown
+
 const StatusBar = React.memo(
   forwardRef<HTMLDivElement, Props>(function StatusBar(
-    { energy, mood, focus, followers, day, phase, streamedToday, onHelpOpen }, ref
+    { energy, mood, focus, followers, day, phase, streamedToday, onHelpOpen,
+      drainFrom, onDrainAnimEnd }, ref
   ) {
     const activePhase: DayPhase | null =
       (DAY_PHASES as readonly string[]).includes(phase) ? phase as DayPhase
       : phase === 'stream' ? 'evening' : null;
     const activeIdx = activePhase ? DAY_PHASES.indexOf(activePhase) : -1;
     const fillPct = PHASE_FILL[phase] ?? 0;
+
+    // Animated display values — start at current, overridden during drain animation
+    const [anim, setAnim] = useState({ energy, mood, focus, followers });
+    const onDrainAnimEndRef = useRef(onDrainAnimEnd);
+    onDrainAnimEndRef.current = onDrainAnimEnd;
+
+    // Sync anim values with real values when not animating
+    useEffect(() => {
+      if (!drainFrom) {
+        setAnim({ energy, mood, focus, followers });
+      }
+    }, [energy, mood, focus, followers, drainFrom]);
+
+    // Run sequential countdown animation when drainFrom is set
+    useEffect(() => {
+      if (!drainFrom) return;
+
+      type StatKey = 'energy' | 'mood' | 'focus' | 'followers';
+      const STATS: StatKey[] = ['energy', 'mood', 'focus', 'followers'];
+      const targets: Record<StatKey, number> = { energy, mood, focus, followers };
+
+      // Start from pre-drain values
+      setAnim({ ...drainFrom });
+
+      let statIdx = 0;
+      let elapsed = 0;
+      let lastTime = performance.now();
+      let rafId: number;
+
+      function step(now: number) {
+        const dt = now - lastTime;
+        lastTime = now;
+        elapsed += dt;
+
+        const key = STATS[statIdx];
+        const from = drainFrom![key];
+        const to = targets[key];
+        const t = Math.min(elapsed / STAT_DUR_MS, 1);
+        const val = Math.round(from + (to - from) * t);
+
+        setAnim(prev => ({ ...prev, [key]: val }));
+
+        if (t >= 1) {
+          elapsed = 0;
+          statIdx++;
+          if (statIdx >= STATS.length) {
+            onDrainAnimEndRef.current?.();
+            return;
+          }
+        }
+        rafId = requestAnimationFrame(step);
+      }
+
+      rafId = requestAnimationFrame(step);
+      return () => cancelAnimationFrame(rafId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [drainFrom]);
 
     return (
       <div className="bs-status" ref={ref} onPointerDown={onHelpOpen}>
@@ -50,7 +114,9 @@ const StatusBar = React.memo(
           <div className="bs-status__right">
             <div className="bs-status__flw">
               <img className="bs-status__flw-icon" src={iconFollowers} alt="" draggable={false} />
-              <span className="bs-status__flw-num">{followers.toLocaleString()}</span>
+              <span className={`bs-status__flw-num${drainFrom && anim.followers !== followers ? ' bs-status__flw-num--counting' : ''}`}>
+                {anim.followers.toLocaleString()}
+              </span>
             </div>
             <span className="bs-status__help-hint">?</span>
           </div>
@@ -58,9 +124,9 @@ const StatusBar = React.memo(
 
         {/* Row 2: 3 stats side by side */}
         <div className="bs-status__stats">
-          <Stat icon={iconEnergy} value={energy} color="var(--bs-energy)" />
-          <Stat icon={iconMood}   value={mood}   color="var(--bs-mood)" />
-          <Stat icon={iconFocus}  value={focus}  color="var(--bs-focus)" />
+          <Stat icon={iconEnergy} value={anim.energy} color="var(--bs-energy)" />
+          <Stat icon={iconMood}   value={anim.mood}   color="var(--bs-mood)" />
+          <Stat icon={iconFocus}  value={anim.focus}  color="var(--bs-focus)" />
         </div>
 
         {/* Row 3: Day timeline — pixel progress bar */}
