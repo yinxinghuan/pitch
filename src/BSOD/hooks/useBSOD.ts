@@ -121,6 +121,7 @@ function initialState(): GameState {
     streamedToday: false,
     showDrainNotice: false,
     drainAppliedDay: 0,
+    checkEventAfterDrain: false,
     statAnimFrom: null,
     streamStartStats: null,
     deathCause: null,
@@ -157,7 +158,9 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
       delta: d, displayValue: preDrain[death] + d,
     }}; }
     (next as GameState).statAnimFrom = preDrain;
-    next = { ...next, showDrainNotice: true };
+    // Defer event check until drain notice is dismissed — don't overlap
+    next = { ...next, showDrainNotice: true, checkEventAfterDrain: true };
+    return next;
   }
 
   // Check for story event
@@ -359,7 +362,23 @@ export function useBSOD() {
   }, []);
 
   const clearStatAnim = useCallback(() => {
-    setState(s => ({ ...s, statAnimFrom: null, showDrainNotice: false }));
+    setState(s => {
+      const next = { ...s, statAnimFrom: null, showDrainNotice: false, checkEventAfterDrain: false };
+      // Run deferred morning event check now that drain notice is gone
+      if (s.checkEventAfterDrain) {
+        const event = getStoryEvent(next.day, next.phase as ActionPhase, next.flags);
+        if (event) {
+          return {
+            ...next,
+            phase: 'event' as Phase,
+            prevPhase: next.phase as ActionPhase,
+            pendingEvent: event,
+            flags: [...next.flags, `ev_${event.id}`],
+          };
+        }
+      }
+      return next;
+    });
   }, []);
 
   const restart = useCallback(() => {

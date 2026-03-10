@@ -143,6 +143,7 @@ export interface GameState {
   streamedToday: boolean;
   showDrainNotice: boolean;
   drainAppliedDay: number;         // last day drain was applied (guards against double-drain on event return)
+  checkEventAfterDrain: boolean;   // defer morning event check until drain notice is dismissed
   /** Pre-change stat snapshot — triggers StatusBar countdown animation */
   statAnimFrom: GameStats | null;
   /** Stats at stream session start — used to animate totals when stream ends */
