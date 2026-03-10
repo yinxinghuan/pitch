@@ -81,6 +81,8 @@ export interface StoryEvent {
   visitorImg?: string;
   /** Visitor's display name shown above the event card */
   visitorName?: string;
+  /** After resolving this event, skip action phase and go directly into a stream */
+  autoStream?: boolean;
 }
 
 export interface StoryChoice {

@@ -19,20 +19,21 @@ export const STORY_EVENTS: StoryEvent[] = [
     textZh: '第一天。父母昨天还在问你什么时候找一份"正经工作"。\n\n你打开电脑，看着空空的直播间。开播按钮就在那里。',
     textEn: 'Day one. Your parents asked yesterday when you\'d get a "real job".\n\nYou open your laptop and look at the empty streaming room. The start button is right there.',
     isayaEmotion: 'normal',
+    autoStream: true,
     choices: [
       {
         labelZh: '不管了，就是要做',
         labelEn: 'Screw it, I\'m doing this',
-        resultZh: '手指点下去，直播间开了。没什么特别的感觉——只是开始了。',
-        resultEn: 'You hit start. The stream opens. Nothing special — it just begins.',
-        effect: { mood: 10, focus: 5, connection: 0 },
+        resultZh: '手指点下去。直播间开了。',
+        resultEn: 'You hit start. The stream opens.',
+        effect: { mood: 10, focus: 5 },
         emotion: 'normal',
       },
       {
         labelZh: '……先想想看',
         labelEn: '...let me think about this',
-        resultZh: '你又想了一会儿。最后还是打开了直播间。',
-        resultEn: 'You think a little longer. Then you open the stream anyway.',
+        resultZh: '想了一会儿，还是打开了。',
+        resultEn: 'You think about it. Then open it anyway.',
         effect: { mood: -5, focus: 10 },
         emotion: 'sad',
       },
@@ -1341,4 +1342,65 @@ export function pickStreamEvents(count = 5): StreamEvent[] {
   const normals  = normalShuffled.slice(0, count - specials.length); // fill the rest
   const combined = [...specials, ...normals].sort(() => Math.random() - 0.5);
   return combined;
+}
+
+// ── Prologue stream events ────────────────────────────────────────────────────
+// Used for the very first stream (day 1 opening), before the 13-day grind begins.
+// Follower numbers are intentionally small — this run establishes your starting base.
+export const PROLOGUE_STREAM_EVENTS: StreamEvent[] = [
+  {
+    id: 'pro_1',
+    textZh: '直播间里有七个人。其中三个不到一分钟就走了。\n\n还剩四个。你对着麦克风说了声"你好"。',
+    textEn: 'Seven people in chat. Three leave within a minute.\n\nFour remain. You say "hello" into the mic.',
+    choices: [
+      {
+        labelZh: '介绍一下自己',
+        labelEn: 'Introduce yourself',
+        effect: { mood: 8, followers: 30 },
+      },
+      {
+        labelZh: '直接开始打游戏',
+        labelEn: 'Just start playing',
+        effect: { focus: 5, followers: 15 },
+      },
+    ],
+  },
+  {
+    id: 'pro_2',
+    textZh: '有人发弹幕问："主播第一次直播吗？"\n\n你看了一眼直播间人数：十二个。',
+    textEn: 'Someone in chat asks: "Is this your first stream?"\n\nYou check the viewer count: twelve.',
+    choices: [
+      {
+        labelZh: '老实承认，"是的，多包容"',
+        labelEn: 'Admit it — "yeah, be gentle"',
+        effect: { mood: 5, followers: 40, connection: 1 },
+      },
+      {
+        labelZh: '假装淡定，"算是吧"',
+        labelEn: 'Play it cool — "kind of"',
+        effect: { focus: 8, followers: 20 },
+      },
+    ],
+  },
+  {
+    id: 'pro_3',
+    textZh: '一个小时后，直播间稳在二十几人。\n\n"那今天先这样？" 你试探地问。\n弹幕回："可以，明天还来。"',
+    textEn: 'An hour in. Viewer count sitting around twenty.\n\n"Should I call it?" you ask.\nChat replies: "yeah, see you tomorrow."',
+    choices: [
+      {
+        labelZh: '再打一局，留久一点',
+        labelEn: 'One more game, stay a bit longer',
+        effect: { followers: 55, energy: -10 },
+      },
+      {
+        labelZh: '好，明天见',
+        labelEn: 'Alright, see you tomorrow',
+        effect: { followers: 30, mood: 5 },
+      },
+    ],
+  },
+];
+
+export function pickPrologueStreamEvents(): StreamEvent[] {
+  return [...PROLOGUE_STREAM_EVENTS].sort(() => Math.random() - 0.5);
 }

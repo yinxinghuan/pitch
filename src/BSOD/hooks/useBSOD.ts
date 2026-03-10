@@ -3,7 +3,7 @@ import type {
   GameState, Phase, ActionPhase, StatEffect, GameStats,
   DeathCause, EndingType, GameAction, StoryChoice, ResponseSpeed, VolatileType,
 } from '../types';
-import { STORY_EVENTS, pickStreamEvents } from '../data/events';
+import { STORY_EVENTS, pickStreamEvents, pickPrologueStreamEvents } from '../data/events';
 import { getActionsForPhase } from '../data/actions';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -14,7 +14,7 @@ const INITIAL_STATS = {
   energy: 65,
   mood: 58,
   focus: 52,
-  followers: 1200,
+  followers: 100, // prologue stream establishes the real starting base
 };
 
 // Passive drain each day at morning start
@@ -120,7 +120,7 @@ function initialState(): GameState {
     dayLogStart: { ...INITIAL_STATS },
     streamedToday: false,
     showDrainNotice: false,
-    drainAppliedDay: 0,
+    drainAppliedDay: 1, // skip day 1 drain — prologue stream establishes starting base
     checkEventAfterDrain: false,
     statAnimFrom: null,
     streamStartStats: null,
@@ -192,12 +192,34 @@ export function useBSOD() {
     setState(s => {
       if (s.phase !== 'event' || !s.pendingEvent) return s;
       const before = snap(s);
+      const autoStream = s.pendingEvent.autoStream;
       let next = applyEffect(s, choice.effect);
       const death = checkDeath(next);
       if (death) { const d = deathDelta(choice.effect, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
         labelZh: choice.labelZh, labelEn: choice.labelEn,
         delta: d, displayValue: preStat(s, death) + d,
       }}; }
+
+      // autoStream: skip action phase, jump directly into a stream session
+      if (autoStream) {
+        const queue = pickPrologueStreamEvents();
+        return {
+          ...next,
+          pendingEvent: null,
+          phase: 'stream' as Phase,
+          prevPhase: s.prevPhase, // morning — so stream end advances to afternoon
+          lastAction: null,
+          streamQueue: queue,
+          streamIndex: 0,
+          streamFollowersGained: 0,
+          streamLastEvent: null,
+          streamPendingEnd: false,
+          streamedToday: true,
+          streamStartStats: before,
+          statAnimFrom: null,
+        };
+      }
+
       // Return to the phase this event triggered in
       const result = enterPhase({ ...next, pendingEvent: null }, s.prevPhase);
       // Only show stat animation if we land on an action phase (not another event)
