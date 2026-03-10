@@ -16,7 +16,7 @@ IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "src/BSOD/img
 os.makedirs(IMG_DIR, exist_ok=True)
 
 API_URL  = "http://aiservice.wdabuliu.com:8019/genl_image"
-REF_URL  = "https://raw.githubusercontent.com/yinxinghuan/bsod/master/src/BSOD/img/bg_stream.png"
+REF_URL  = "https://raw.githubusercontent.com/yinxinghuan/bsod/master/src/BSOD/img/banner_ref.png"
 USER_ID  = "bsod_game"
 RATE_WAIT = 78
 API_TIMEOUT = 90
@@ -28,10 +28,10 @@ _SSL_CTX.verify_mode = ssl.CERT_NONE
 # ── Style base ─────────────────────────────────────────────────────────────────
 
 STYLE = (
-    "anime illustration, dark gaming room atmosphere, purple neon accent lighting, "
-    "cinematic close-up, moody dramatic lighting, digital screen glow, "
-    "no characters, no people, UI and environment only, "
-    "sharp detailed render, dark background"
+    "flat minimal icon illustration, dark navy solid background, "
+    "single bold centered graphic element, clean crisp vector style, "
+    "no room, no environment, no background scenery, no characters, no people, "
+    "simple bold shapes, soft glow on icon, game notification card aesthetic"
 )
 
 # ── Event image prompts ────────────────────────────────────────────────────────
@@ -261,35 +261,48 @@ def download(url, path, retries=3):
                        check=True, capture_output=True)
         os.remove(tmp)
 
-def remove_green(img_path, threshold=60, feather=30):
-    img = Image.open(img_path).convert("RGBA")
-    data = img.load()
+BANNER_W = 600   # final output width  (px)
+BANNER_H = 220   # final output height (px) — wide banner / 条幅感
+
+def crop_center_banner(tmp_png, out_jpg):
+    """Center-crop a portrait PNG to a landscape banner JPEG."""
+    img = Image.open(tmp_png).convert("RGB")
     w, h = img.size
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = data[x, y]
-            greenness = g - max(r, b)
-            if greenness > threshold:
-                remove = min(1.0, (greenness - threshold) / feather)
-                data[x, y] = (r, g, b, int(a * (1 - remove)))
-    img.save(img_path)
+    # Scale so width == BANNER_W
+    scale = BANNER_W / w
+    new_h = int(h * scale)
+    img = img.resize((BANNER_W, new_h), Image.LANCZOS)
+    # Center-crop height
+    if new_h > BANNER_H:
+        y0 = (new_h - BANNER_H) // 2
+        img = img.crop((0, y0, BANNER_W, y0 + BANNER_H))
+    img.save(out_jpg, "JPEG", quality=88, optimize=True)
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else None
+    args = sys.argv[1:]
+    force = "--force" in args
+    args = [a for a in args if a != "--force"]
+    target = args[0] if args else None
     tasks = [e for e in EVENTS if target is None or e["id"] == target]
 
     if not tasks:
         sys.exit(f"Event '{target}' not found")
 
-    print(f"Generating {len(tasks)} stream event image(s)…\n")
+    print(f"Generating {len(tasks)} stream event banner(s) ({BANNER_W}×{BANNER_H})…\n")
 
     for i, ev in enumerate(tasks):
-        out = os.path.join(IMG_DIR, f"{ev['id']}.png")
-        if os.path.exists(out) and target is None:
-            print(f"[{i+1}/{len(tasks)}] {ev['id']} — already exists, skipping")
-            continue
+        out_jpg = os.path.join(IMG_DIR, f"{ev['id']}.jpg")
+        # Skip if already correct size, unless --force
+        if not force and os.path.exists(out_jpg) and target is None:
+            try:
+                probe = Image.open(out_jpg)
+                if probe.size == (BANNER_W, BANNER_H):
+                    print(f"[{i+1}/{len(tasks)}] {ev['id']} — already exists, skipping")
+                    continue
+            except Exception:
+                pass
 
         print(f"[{i+1}/{len(tasks)}] {ev['id']}")
         while True:
@@ -305,10 +318,12 @@ if __name__ == "__main__":
             continue
 
         print(f"  ↓ downloading…")
-        download(result_url, out)
-        remove_green(out)
-        size = os.path.getsize(out) // 1024
-        print(f"  ✓ {size} KB")
+        tmp_png = out_jpg + ".tmp.png"
+        download(result_url, tmp_png)
+        crop_center_banner(tmp_png, out_jpg)
+        os.remove(tmp_png)
+        size = os.path.getsize(out_jpg) // 1024
+        print(f"  ✓ {size} KB  ({BANNER_W}×{BANNER_H})")
 
         if i < len(tasks) - 1 and target is None:
             print(f"  ⏳ waiting {RATE_WAIT}s…")
