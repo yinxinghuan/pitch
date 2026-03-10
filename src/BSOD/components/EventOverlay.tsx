@@ -22,13 +22,14 @@ const STAT_ICONS: { key: keyof StatEffect; icon: string }[] = [
 
 const EventOverlay = React.memo(
   forwardRef<HTMLDivElement, Props>(function EventOverlay({ event, onChoice, onDismiss }, ref) {
-    const [feedback, setFeedback] = useState<{ effect: StatEffect; index: number } | null>(null);
+    const [feedback, setFeedback] = useState<{ effect: StatEffect; index: number; resultZh?: string; resultEn?: string } | null>(null);
     const chosenRef = useRef(false);
 
     const handleChoice = (index: number) => {
       if (chosenRef.current) return;
       chosenRef.current = true;
-      setFeedback({ effect: event.choices![index].effect, index });
+      const c = event.choices![index];
+      setFeedback({ effect: c.effect, index, resultZh: c.resultZh, resultEn: c.resultEn });
     };
 
     const handleFeedbackDismiss = () => {
@@ -53,7 +54,11 @@ const EventOverlay = React.memo(
               )}
             </div>
           )}
-          <p className="bs-event__text">{getText(event.textZh, event.textEn)}</p>
+          <p className="bs-event__text">
+            {feedback && (feedback.resultZh || feedback.resultEn)
+              ? getText(feedback.resultZh ?? '', feedback.resultEn ?? '')
+              : getText(event.textZh, event.textEn)}
+          </p>
 
           {/* Stat delta feedback — shown after a choice is made */}
           {feedback ? (

@@ -86,6 +86,8 @@ export interface StoryEvent {
 export interface StoryChoice {
   labelZh: string;
   labelEn: string;
+  resultZh?: string;
+  resultEn?: string;
   effect: StatEffect;
   emotion?: IsayaEmotion;
 }
