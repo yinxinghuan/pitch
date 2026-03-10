@@ -20,6 +20,10 @@ import isayaSad from './img/laisa_sad.png';
 import isayaSurprised from './img/laisa_surprised.png';
 import isayaTired from './img/laisa_tired.png';
 import isayaFocused from './img/laisa_focused.png';
+import isayaWorn from './img/laisa_worn.png';
+import isayaRundown from './img/laisa_rundown.png';
+import isayaWreck from './img/laisa_wreck.png';
+import isayaManic from './img/laisa_manic.png';
 import {
   resumeAudio, playClick, playConfirm, playPanelOpen,
   playGameStart, playStreamStart, playEvent, playStatUp, playStatDown,
@@ -37,6 +41,15 @@ const ISAYA_IMGS: Record<string, string> = {
   tired:     isayaTired,
   focused:   isayaFocused,
 };
+
+function getConditionSprite(energy: number, mood: number, focus: number): string {
+  if (energy < 30 && focus > 65) return isayaManic;
+  if (energy < 20 && mood < 20) return isayaWreck;
+  if (energy < 30 || mood < 30) return isayaRundown;
+  if (energy < 45 || mood < 45) return isayaWorn;
+  if (energy >= 65 && mood >= 65) return isayaHappy;
+  return isayaIdle;
+}
 
 function getIsayaVisible(state: GameState): { visible: boolean; emotion: string } {
   const { phase, pendingEvent } = state;
@@ -133,7 +146,9 @@ const BSOD = React.memo(
     };
 
     const { visible: isayaVisible, emotion: isayaEmotion } = getIsayaVisible(state);
-    const isayaSrc = ISAYA_IMGS[isayaEmotion] ?? isayaIdle;
+    const conditionSprite = state.showConditionSprite ? getConditionSprite(energy, mood, focus) : null;
+    const isayaSrc = conditionSprite ?? (ISAYA_IMGS[isayaEmotion] ?? isayaIdle);
+    const isayaShowing = isayaVisible || !!conditionSprite || state.showDrainNotice;
     const filterClass = PHASE_FILTER[phase] ?? 'bs--night';
 
 
@@ -237,8 +252,8 @@ const BSOD = React.memo(
           />
         )}
 
-        {/* Laisa character sprite — only during events / big stat changes */}
-        {isayaVisible && (
+        {/* Laisa character sprite — during events or condition state after daily drain */}
+        {isayaShowing && (
           <div className={`bs__char-area${phase === 'event' ? ' bs__char-area--event' : ''}`}>
             <img
               className="bs__char"

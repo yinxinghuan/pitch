@@ -122,6 +122,7 @@ function initialState(): GameState {
     showDrainNotice: false,
     drainAppliedDay: 1, // skip day 1 drain — prologue stream establishes starting base
     checkEventAfterDrain: false,
+    showConditionSprite: false,
     statAnimFrom: null,
     streamStartStats: null,
     deathCause: null,
@@ -159,7 +160,7 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
     }}; }
     (next as GameState).statAnimFrom = preDrain;
     // Defer event check until drain notice is dismissed — don't overlap
-    next = { ...next, showDrainNotice: true, checkEventAfterDrain: true };
+    next = { ...next, showDrainNotice: true, checkEventAfterDrain: true, showConditionSprite: true };
     return next;
   }
 
@@ -253,6 +254,7 @@ export function useBSOD() {
         phase: 'actionResult' as Phase,
         lastAction: volatileAction,
         prevPhase: currentPhase,
+        showConditionSprite: false,
       };
     });
   }, []);
