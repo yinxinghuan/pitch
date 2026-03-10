@@ -232,19 +232,21 @@ const BSOD = React.memo(
           />
         </div>
 
-        {/* Status bar */}
-        <StatusBar
-          energy={energy} mood={mood} focus={focus}
-          followers={followers} day={day} phase={phase}
-          streamedToday={streamedToday}
-          onHelpOpen={() => { playPanelOpen(); setShowHelp(true); }}
-          statAnimFrom={state.statAnimFrom ?? undefined}
-          onStatAnimEnd={actions.clearStatAnim}
-        />
+        {/* Status bar — hidden during events */}
+        {phase !== 'event' && (
+          <StatusBar
+            energy={energy} mood={mood} focus={focus}
+            followers={followers} day={day} phase={phase}
+            streamedToday={streamedToday}
+            onHelpOpen={() => { playPanelOpen(); setShowHelp(true); }}
+            statAnimFrom={state.statAnimFrom ?? undefined}
+            onStatAnimEnd={actions.clearStatAnim}
+          />
+        )}
 
         {/* Laisa character sprite — only during events / big stat changes */}
         {isayaVisible && (
-          <div className="bs__char-area">
+          <div className={`bs__char-area${phase === 'event' ? ' bs__char-area--event' : ''}`}>
             <img
               className="bs__char"
               src={isayaSrc}
