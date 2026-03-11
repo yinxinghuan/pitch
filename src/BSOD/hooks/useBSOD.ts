@@ -18,7 +18,7 @@ const INITIAL_STATS = {
 };
 
 // Passive drain each day at morning start
-const DAILY_DRAIN = { energy: -12, mood: -15, focus: -5, followers: -40 };
+const DAILY_DRAIN = { energy: -12, mood: -15, focus: -5, followers: -40, connection: -1 };
 
 const PHASE_ORDER: ActionPhase[] = ['morning', 'afternoon', 'evening', 'night'];
 
@@ -144,6 +144,7 @@ function enterPhase(state: GameState, phase: ActionPhase): GameState {
       mood: clamp(next.mood + DAILY_DRAIN.mood),
       focus: clamp(next.focus + DAILY_DRAIN.focus),
       followers: Math.max(0, next.followers + DAILY_DRAIN.followers),
+      connection: Math.min(10, Math.max(0, next.connection + DAILY_DRAIN.connection)),
       drainAppliedDay: next.day,
       streamedToday: false,
       dayLogStart: {
