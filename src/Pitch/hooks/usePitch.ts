@@ -12,13 +12,13 @@ const TOTAL_DAYS = 13;
 
 const INITIAL_STATS = {
   energy: 70,
-  composure: 60,
-  vision: 75,
-  runway: 60, // unit = month×10, so 60 = 6.0 months
+  composure: 65,
+  vision: 60,
+  runway: 24, // unit = month×10, so 24 = 2.4 months
 };
 
 // Passive drain each day at morning start
-const DAILY_DRAIN = { energy: -10, composure: -12, vision: -4, runway: -4, morale: -1 };
+const DAILY_DRAIN = { energy: -8, composure: -8, vision: -6, runway: -3, morale: -1 };
 
 const PHASE_ORDER: ActionPhase[] = ['morning', 'build', 'pitch', 'night'];
 
@@ -33,12 +33,12 @@ export function volatileRunway(base: number): { value: number; type: VolatileTyp
   if (base === 0) return { value: 0, type: 'normal' };
   const r = Math.random();
   if (base > 0) {
-    if (r < 0.04) return { value: Math.round(base * (5 + Math.random() * 5)),    type: 'viral' };
-    if (r < 0.14) return { value: Math.round(base * (1.8 + Math.random())),       type: 'boost' };
-    if (r < 0.26) return { value: Math.round(base * (0.3 + Math.random() * 0.3)), type: 'flop' };
+    if (r < 0.05) return { value: Math.round(base * (2.0 + Math.random())),       type: 'viral' };
+    if (r < 0.15) return { value: Math.round(base * (1.4 + Math.random() * 0.4)), type: 'boost' };
+    if (r < 0.28) return { value: Math.round(base * (0.3 + Math.random() * 0.3)), type: 'flop' };
     return { value: base, type: 'normal' };
   } else {
-    if (r < 0.07) return { value: Math.round(base * (3 + Math.random() * 2)),    type: 'controversy' };
+    if (r < 0.08) return { value: Math.round(base * (1.5 + Math.random())),       type: 'controversy' };
     return { value: base, type: 'normal' };
   }
 }
@@ -83,14 +83,14 @@ function checkDeath(state: GameState): DeathCause | null {
 
 function calcEnding(state: GameState): EndingType {
   const { runway, morale, energy, composure, vision } = state;
-  // Specific conditions checked first
-  if (runway > 15 && morale >= 8 && (energy < 15 || composure < 15)) return 'burnout';
-  if (morale >= 9 && runway <= 5) return 'indie';
-  if (runway > 18 && morale <= 2) return 'sold_out';
+  // Specific conditions checked first (runway units: ×10 months, so 60 = 6.0 months)
+  if (runway >= 50 && morale >= 8 && (energy < 20 || composure < 20)) return 'burnout';
+  if (morale >= 8 && runway <= 12) return 'indie';
+  if (runway >= 80 && morale <= 2) return 'sold_out';
   // General conditions
-  if (runway > 12 && vision >= 60 && morale >= 6) return 'unicorn';
-  if (runway > 12 && vision < 40) return 'corporate';
-  if (vision >= 70 && morale >= 7) return 'bootstrap';
+  if (runway >= 50 && vision >= 55 && morale >= 6) return 'unicorn';
+  if (runway >= 50 && vision < 35) return 'corporate';
+  if (vision >= 65 && morale >= 7) return 'bootstrap';
   return 'shutdown';
 }
 
@@ -115,7 +115,7 @@ function initialState(): GameState {
     streamRunwayGained: 0,
     streamLastEvent: null,
     streamPendingEnd: false,
-    dayLogStart: { ...INITIAL_STATS },
+    dayLogStart: { energy: INITIAL_STATS.energy, composure: INITIAL_STATS.composure, vision: INITIAL_STATS.vision, runway: INITIAL_STATS.runway },
     pitchedToday: false,
     showDrainNotice: false,
     drainAppliedDay: 1,
