@@ -102,7 +102,7 @@ export function startAmbient(scene = 'morning'): void {
 
   masterGain = ctx.createGain();
   masterGain.gain.setValueAtTime(0.001, now);
-  masterGain.gain.exponentialRampToValueAtTime(1, now + FADE);
+  masterGain.gain.exponentialRampToValueAtTime(0.4, now + FADE);
   masterGain.connect(ctx.destination);
 
   // ── Office hum layer ──
