@@ -82,12 +82,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"谢谢你。我想清楚了一些。"',
         labelEn: '"Thanks. That helps me think clearer."',
+        resultZh: 'Algram 拍了拍你的肩膀。你感觉心里踏实了一些。',
+        resultEn: 'Algram pats your shoulder. You feel a little more grounded.',
         effect: { composure: 8, vision: 4, morale: 1 },
         emotion: 'happy',
       },
       {
         labelZh: '"可我连活下去的机会都不多了……"',
         labelEn: '"But I barely have enough runway to survive..."',
+        resultZh: 'Algram 沉默了一会儿。"那就更要想清楚什么是最重要的。"',
+        resultEn: 'Algram pauses. "Then it\'s even more important to know what matters most."',
         effect: { composure: 4, vision: -4, morale: 1 },
         emotion: 'sad',
       },
@@ -106,12 +110,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '关掉新闻，回复妈妈',
         labelEn: 'Close the news, reply to Mom',
+        resultZh: '你打了几个字："吃了，别担心。"心里暖了一点。',
+        resultEn: 'You type: "I ate, don\'t worry." It warms you a little.',
         effect: { composure: 10, vision: 4 },
         emotion: 'happy',
       },
       {
         labelZh: '反复看那条融资新闻',
         labelEn: 'Keep re-reading the funding news',
+        resultZh: '5000万。你越看越焦虑，一上午什么都没做成。',
+        resultEn: '$50 million. The more you read, the more anxious you get. The whole morning is wasted.',
         effect: { composure: -12, vision: -6, runway: 0 },
         emotion: 'stressed',
       },
@@ -132,12 +140,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"太好了，我们来试试"',
         labelEn: '"Great, let\'s try it"',
+        resultZh: '你们开始在白板上画架构图。一下午过得飞快。',
+        resultEn: 'You start sketching architecture on the whiteboard. The afternoon flies by.',
         effect: { vision: 8, runway: 2, morale: 1 },
         emotion: 'happy',
       },
       {
         labelZh: '"投资人只看 DAU 和留存，这够吗？"',
         labelEn: '"Investors only care about DAU and retention. Is this enough?"',
+        resultZh: 'ghostpixel 想了想说："数据是结果，不是出发点。先做对的事。"',
+        resultEn: 'ghostpixel thinks for a moment. "Data is the result, not the starting point. Do the right thing first."',
         effect: { vision: 6, composure: -6, morale: 1 },
         emotion: 'stressed',
       },
@@ -156,12 +168,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '这证明了我们的方向是对的',
         labelEn: 'This proves our direction is right',
+        resultZh: '你打开产品后台，用户活跃度没降反升。用户在用脚投票。',
+        resultEn: 'You check the dashboard. User activity didn\'t drop — it went up. Users are voting with their feet.',
         effect: { vision: 10, composure: 8, morale: 1 },
         emotion: 'focused',
       },
       {
         labelZh: '大厂入场了，我们还有机会吗？',
         labelEn: 'A giant entered the space. Do we even stand a chance?',
+        resultZh: '你盯着他们的产品页面看了很久，越看越觉得自己好渺小。',
+        resultEn: 'You stare at their product page for a long time. The longer you look, the smaller you feel.',
         effect: { composure: -10, vision: -6 },
         emotion: 'sad',
       },
@@ -180,12 +196,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '把便签贴回显示器上',
         labelEn: 'Stick it back on the monitor',
+        resultZh: '那行字在屏幕边上，每次抬头都能看见。你知道自己在做什么了。',
+        resultEn: 'The note sits at the edge of your screen. Every time you look up, you remember why.',
         effect: { vision: 14, composure: 8 },
         emotion: 'focused',
       },
       {
         labelZh: '看了很久，然后放回抽屉',
         labelEn: 'Stare at it for a while, then put it back in the drawer',
+        resultZh: '抽屉关上的那一声，像关上了什么。',
+        resultEn: 'The sound of the drawer closing feels like something else shutting, too.',
         effect: { composure: 4, vision: -4 },
         emotion: 'sad',
       },
@@ -206,12 +226,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"谢谢你告诉我这些。这就是我做这件事的原因。"',
         labelEn: '"Thank you for telling me this. This is why I built this."',
+        resultZh: 'Laisa 笑了。你很久没有这么确定过自己在做的事是对的。',
+        resultEn: 'Laisa smiles. You haven\'t felt this certain about your work in a long time.',
         effect: { composure: 10, vision: 6, morale: 2 },
         emotion: 'happy',
       },
       {
         labelZh: '"但我不知道还能维持多久……"',
         labelEn: '"But I don\'t know how much longer we can keep this going..."',
+        resultZh: 'Laisa 握了握你的手。"那就让我们珍惜还在的时候。"',
+        resultEn: 'Laisa squeezes your hand. "Then let\'s cherish the time we have."',
         effect: { composure: 6, vision: 4, morale: 1 },
         emotion: 'sad',
       },
@@ -258,12 +282,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"我理解。不管你怎么选，我都尊重。"',
         labelEn: '"I understand. Whatever you decide, I respect it."',
+        resultZh: '小张点了点头，走出办公室。你看着他的背影，心里空了一块。',
+        resultEn: 'They nod and walk out. Watching them leave, you feel a hollow ache.',
         effect: { composure: -8, morale: 2 },
         emotion: 'sad',
       },
       {
         labelZh: '"留下来。我们正在做的事值得。"',
         labelEn: '"Stay. What we\'re building matters."',
+        resultZh: '小张看着你的眼睛，半天说了一句："好。"',
+        resultEn: 'They look you in the eye. After a long pause: "Okay."',
         effect: { composure: 4, morale: 1, vision: 4 },
         emotion: 'focused',
       },
@@ -282,12 +310,16 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"你说得对。我不能忘了为什么开始。"',
         labelEn: '"You\'re right. I can\'t forget why I started."',
+        resultZh: 'JM·F 举起杯子。"敬所有还在坚持的人。"',
+        resultEn: 'JM·F raises his glass. "To everyone who\'s still fighting."',
         effect: { composure: 10, vision: 5, morale: 1 },
         emotion: 'happy',
       },
       {
         labelZh: '"但如果做不下去了呢？"',
         labelEn: '"But what if we can\'t keep going?"',
+        resultZh: 'JM·F 沉默了一会儿。"那也不丢人。但你至少要试过。"',
+        resultEn: 'JM·F is quiet for a moment. "That\'s no shame. But you have to try first."',
         effect: { composure: 4, morale: 1 },
         emotion: 'sad',
       },
@@ -306,6 +338,8 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '听他说',
         labelEn: 'Listen',
+        resultZh: '他说了很多。关于压力，关于方向，关于他自己的犹豫。你听着，没有打断。',
+        resultEn: 'He talks about the pressure, the direction, his own doubts. You listen without interrupting.',
         effect: { composure: -4 },
         emotion: 'normal',
       },
@@ -353,6 +387,8 @@ export const STORY_EVENTS: StoryEvent[] = [
       {
         labelZh: '"谢谢你。我需要听到这些。"',
         labelEn: '"Thank you. I needed to hear that."',
+        resultZh: '你关上手机，看着窗外的夜色，觉得没那么累了。',
+        resultEn: 'You close your phone and look out at the night sky. You feel a little less tired.',
         effect: { composure: 12, morale: 1 },
         emotion: 'happy',
       },
@@ -378,9 +414,9 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"你们的用户增长策略是什么？不靠算法推荐，怎么获客？"',
     textEn: '"What\'s your user growth strategy? Without algorithmic recommendations, how do you acquire users?"',
     choices: [
-      { labelZh: '口碑传播 + 内容质量', labelEn: 'Word of mouth + content quality', effect: { runway: 3, vision: 3 }, emotion: 'focused' },
-      { labelZh: '社区驱动增长', labelEn: 'Community-driven growth', effect: { runway: 2, morale: 1 }, emotion: 'normal' },
-      { labelZh: '我们还在探索', labelEn: 'We\'re still exploring', effect: { runway: -1, composure: -4 }, emotion: 'stressed' },
+      { labelZh: '口碑传播 + 内容质量', labelEn: 'Word of mouth + content quality', resultZh: '投资人点了点头："有案例吗？"', resultEn: 'The investor nods. "Got examples?"', effect: { runway: 3, vision: 3 }, emotion: 'focused' },
+      { labelZh: '社区驱动增长', labelEn: 'Community-driven growth', resultZh: '投资人记了一笔。看起来有点兴趣。', resultEn: 'The investor takes a note. Seems somewhat interested.', effect: { runway: 2, morale: 1 }, emotion: 'normal' },
+      { labelZh: '我们还在探索', labelEn: 'We\'re still exploring', resultZh: '投资人皱了皱眉，翻到下一页。', resultEn: 'The investor frowns and flips to the next page.', effect: { runway: -1, composure: -4 }, emotion: 'stressed' },
     ],
   },
   {
@@ -388,9 +424,9 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"不做广告，你们怎么赚钱？"',
     textEn: '"No ads. So how do you make money?"',
     choices: [
-      { labelZh: '订阅制 + 增值功能', labelEn: 'Subscription + premium features', effect: { runway: 4, vision: 2 }, emotion: 'focused' },
-      { labelZh: '先做好产品再说', labelEn: 'Build the product first, monetize later', effect: { runway: -2, vision: 5 }, emotion: 'normal' },
-      { labelZh: '我们正在测试几种模式', labelEn: 'Testing a few models', effect: { runway: 1, composure: -2 }, emotion: 'normal' },
+      { labelZh: '订阅制 + 增值功能', labelEn: 'Subscription + premium features', resultZh: '"单位经济模型跑通了吗？"投资人追问。', resultEn: '"Unit economics work out?" the investor presses.', effect: { runway: 4, vision: 2 }, emotion: 'focused' },
+      { labelZh: '先做好产品再说', labelEn: 'Build the product first, monetize later', resultZh: '投资人靠回椅背。这个答案他听过太多次了。', resultEn: 'The investor leans back. They\'ve heard this one before.', effect: { runway: -2, vision: 5 }, emotion: 'normal' },
+      { labelZh: '我们正在测试几种模式', labelEn: 'Testing a few models', resultZh: '"测试"两个字没有给他信心。', resultEn: '"Testing" doesn\'t inspire confidence.', effect: { runway: 1, composure: -2 }, emotion: 'normal' },
     ],
   },
   {
@@ -398,8 +434,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"你们的目标市场有多大？天花板在哪里？"',
     textEn: '"How big is your target market? What\'s the ceiling?"',
     choices: [
-      { labelZh: '社交赛道万亿级别', labelEn: 'Social is a trillion-dollar space', effect: { runway: 3, composure: 3 }, emotion: 'focused' },
-      { labelZh: '我们不追求最大，追求最好', labelEn: 'We don\'t chase biggest, we chase best', effect: { runway: -1, vision: 5, morale: 1 }, emotion: 'happy' },
+      { labelZh: '社交赛道万亿级别', labelEn: 'Social is a trillion-dollar space', resultZh: '投资人微微点头。这是他们想听的数字。', resultEn: 'A slight nod. That\'s the kind of number they want to hear.', effect: { runway: 3, composure: 3 }, emotion: 'focused' },
+      { labelZh: '我们不追求最大，追求最好', labelEn: 'We don\'t chase biggest, we chase best', resultZh: '投资人表情复杂——欣赏，但也犹豫。', resultEn: 'A complicated expression — admiration mixed with hesitation.', effect: { runway: -1, vision: 5, morale: 1 }, emotion: 'happy' },
     ],
   },
   {
@@ -407,9 +443,9 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"大厂随时可以抄你。你的护城河是什么？"',
     textEn: '"Big tech can copy you anytime. What\'s your moat?"',
     choices: [
-      { labelZh: '社区信任感不可复制', labelEn: 'Community trust can\'t be replicated', effect: { runway: 3, vision: 4 }, emotion: 'focused' },
-      { labelZh: '技术差异化', labelEn: 'Technical differentiation', effect: { runway: 2, vision: 3 }, emotion: 'normal' },
-      { labelZh: '说实话，这也是我担心的', labelEn: 'Honestly, that worries me too', effect: { composure: -6, runway: -1 }, emotion: 'sad' },
+      { labelZh: '社区信任感不可复制', labelEn: 'Community trust can\'t be replicated', resultZh: '投资人似乎被打动了。"继续说。"', resultEn: 'The investor seems moved. "Go on."', effect: { runway: 3, vision: 4 }, emotion: 'focused' },
+      { labelZh: '技术差异化', labelEn: 'Technical differentiation', resultZh: '"具体是哪些技术？"他开始认真了。', resultEn: '"What tech specifically?" They\'re paying attention now.', effect: { runway: 2, vision: 3 }, emotion: 'normal' },
+      { labelZh: '说实话，这也是我担心的', labelEn: 'Honestly, that worries me too', resultZh: '诚实没有换来同情。投资人的表情冷了下来。', resultEn: 'Honesty doesn\'t earn sympathy. The investor\'s expression cools.', effect: { composure: -6, runway: -1 }, emotion: 'sad' },
     ],
   },
   {
@@ -417,8 +453,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"你们的留存数据怎么样？"',
     textEn: '"What are your retention numbers like?"',
     choices: [
-      { labelZh: '7日留存42%，核心用户极其忠诚', labelEn: '7-day retention 42%, core users are incredibly loyal', effect: { runway: 4, composure: 3 }, emotion: 'happy' },
-      { labelZh: '数据还在积累中', labelEn: 'Still accumulating data', effect: { runway: 1, composure: -3 }, emotion: 'normal' },
+      { labelZh: '7日留存42%，核心用户极其忠诚', labelEn: '7-day retention 42%, core users are incredibly loyal', resultZh: '投资人眉毛挑了一下。"42%？不错。"', resultEn: 'An eyebrow raise. "42%? Not bad."', effect: { runway: 4, composure: 3 }, emotion: 'happy' },
+      { labelZh: '数据还在积累中', labelEn: 'Still accumulating data', resultZh: '投资人在文件上打了个问号。', resultEn: 'The investor marks a question mark on the document.', effect: { runway: 1, composure: -3 }, emotion: 'normal' },
     ],
   },
   {
@@ -426,8 +462,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"团队几个人？谁是你的核心？"',
     textEn: '"How big is the team? Who\'s your core?"',
     choices: [
-      { labelZh: '小而精，每个人都是全栈', labelEn: 'Small but elite, everyone\'s full-stack', effect: { runway: 2, morale: 1 }, emotion: 'happy' },
-      { labelZh: '正在招人，但很谨慎', labelEn: 'Hiring carefully', effect: { runway: 1, composure: 2 }, emotion: 'normal' },
+      { labelZh: '小而精，每个人都是全栈', labelEn: 'Small but elite, everyone\'s full-stack', resultZh: '"效率高是好事。"投资人在评估你们的人效比。', resultEn: '"Efficiency is good." The investor is calculating your output-per-head.', effect: { runway: 2, morale: 1 }, emotion: 'happy' },
+      { labelZh: '正在招人，但很谨慎', labelEn: 'Hiring carefully', resultZh: '投资人没什么反应。谨慎不是他们最关心的。', resultEn: 'No real reaction. Caution isn\'t what excites investors.', effect: { runway: 1, composure: 2 }, emotion: 'normal' },
     ],
   },
   {
@@ -435,8 +471,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"三年之后，你希望这个产品变成什么样？"',
     textEn: '"Where do you see this product in three years?"',
     choices: [
-      { labelZh: '一个人人都能真实表达的空间', labelEn: 'A space where everyone can be authentically themselves', effect: { runway: 2, vision: 6, morale: 1 }, emotion: 'focused' },
-      { labelZh: '百万用户量级的社交平台', labelEn: 'A social platform with millions of users', effect: { runway: 4, vision: -3 }, emotion: 'normal' },
+      { labelZh: '一个人人都能真实表达的空间', labelEn: 'A space where everyone can be authentically themselves', resultZh: '投资人放下笔，认真看着你。这一刻，他看到了创始人，不是PPT。', resultEn: 'The investor puts down the pen, looking at you. For a moment, they see a founder, not a slide deck.', effect: { runway: 2, vision: 6, morale: 1 }, emotion: 'focused' },
+      { labelZh: '百万用户量级的社交平台', labelEn: 'A social platform with millions of users', resultZh: '"百万用户。"投资人记下了数字。但你心里知道这不是你真正想说的。', resultEn: '"Millions." The investor writes it down. But you know that\'s not what you really meant to say.', effect: { runway: 4, vision: -3 }, emotion: 'normal' },
     ],
   },
   {
@@ -444,9 +480,9 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"如果融资失败，你怎么办？"',
     textEn: '"What if you fail to raise?"',
     choices: [
-      { labelZh: '继续做，哪怕小而美', labelEn: 'Keep going, even if it stays small', effect: { vision: 6, morale: 1, composure: 3 }, emotion: 'focused' },
-      { labelZh: '缩减规模，先活着', labelEn: 'Scale down, survive first', effect: { runway: 1, composure: 2, vision: -3 }, emotion: 'normal' },
-      { labelZh: '……我不想失败', labelEn: '...I don\'t want to fail', effect: { composure: -8 }, emotion: 'sad' },
+      { labelZh: '继续做，哪怕小而美', labelEn: 'Keep going, even if it stays small', resultZh: '投资人沉默了一会儿，然后轻轻点头。', resultEn: 'A moment of silence. Then a slow nod.', effect: { vision: 6, morale: 1, composure: 3 }, emotion: 'focused' },
+      { labelZh: '缩减规模，先活着', labelEn: 'Scale down, survive first', resultZh: '"务实。"投资人说。但他的兴趣明显减了。', resultEn: '"Practical," the investor says. But interest visibly dims.', effect: { runway: 1, composure: 2, vision: -3 }, emotion: 'normal' },
+      { labelZh: '……我不想失败', labelEn: '...I don\'t want to fail', resultZh: '你的声音有点颤抖。会议室陷入了尴尬的沉默。', resultEn: 'Your voice trembles. An awkward silence fills the room.', effect: { composure: -8 }, emotion: 'sad' },
     ],
   },
   {
@@ -454,8 +490,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"你为什么要做这件事？"',
     textEn: '"Why are you doing this?"',
     choices: [
-      { labelZh: '因为互联网不应该只有算法和流量', labelEn: 'Because the internet shouldn\'t be just algorithms and engagement', effect: { runway: 3, vision: 5, composure: 4 }, emotion: 'focused' },
-      { labelZh: '我相信人有真实表达的需求', labelEn: 'I believe people need spaces for authentic expression', effect: { runway: 2, vision: 4, morale: 1 }, emotion: 'happy' },
+      { labelZh: '因为互联网不应该只有算法和流量', labelEn: 'Because the internet shouldn\'t be just algorithms and engagement', resultZh: '你说完这句话的时候，整个房间安静了一秒。那是好的安静。', resultEn: 'When you finish, the room goes quiet for a second. The good kind of quiet.', effect: { runway: 3, vision: 5, composure: 4 }, emotion: 'focused' },
+      { labelZh: '我相信人有真实表达的需求', labelEn: 'I believe people need spaces for authentic expression', resultZh: '一个年轻的分析师在角落里微微点头。', resultEn: 'A young analyst in the corner nods slightly.', effect: { runway: 2, vision: 4, morale: 1 }, emotion: 'happy' },
     ],
   },
   {
@@ -463,8 +499,8 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"给我看数据。DAU、MAU、用户时长。"',
     textEn: '"Show me the data. DAU, MAU, session time."',
     choices: [
-      { labelZh: '数据不高，但每个数字都是真实活跃', labelEn: 'Numbers are modest, but every metric is genuinely active', effect: { runway: 2, vision: 3, composure: 2 }, emotion: 'normal' },
-      { labelZh: '数据还不够看，这是诚实的回答', labelEn: 'Data isn\'t great yet. Being honest about it.', effect: { runway: -1, composure: 4, morale: 1 }, emotion: 'sad' },
+      { labelZh: '数据不高，但每个数字都是真实活跃', labelEn: 'Numbers are modest, but every metric is genuinely active', resultZh: '"真实活跃"这四个字让他停下来想了想。', resultEn: '"Genuinely active" — the phrase makes them pause and think.', effect: { runway: 2, vision: 3, composure: 2 }, emotion: 'normal' },
+      { labelZh: '数据还不够看，这是诚实的回答', labelEn: 'Data isn\'t great yet. Being honest about it.', resultZh: '投资人看了你一会儿。"至少你诚实。"', resultEn: 'The investor studies you. "At least you\'re honest."', effect: { runway: -1, composure: 4, morale: 1 }, emotion: 'sad' },
     ],
   },
 ];
@@ -476,8 +512,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'The investor suddenly asks: "What if I say, add a light algorithm — not a feed, just \'you might be interested\' — would you accept?"',
     tag: { zh: '灵魂拷问', en: 'THE QUESTION', color: '#f59e0b' },
     choices: [
-      { labelZh: '可以讨论具体方案', labelEn: 'Open to discussing specifics', effect: { runway: 5, vision: -5, composure: 3 }, emotion: 'normal' },
-      { labelZh: '不行。推荐就是算法的开始。', labelEn: 'No. Recommendations are the gateway to algorithms.', effect: { runway: -3, vision: 8, morale: 1 }, emotion: 'focused' },
+      { labelZh: '可以讨论具体方案', labelEn: 'Open to discussing specifics', resultZh: '投资人笑了。"这才是做生意的态度。"你心里有点不是滋味。', resultEn: 'The investor smiles. "Now that\'s a business mindset." You feel a knot in your stomach.', effect: { runway: 5, vision: -5, composure: 3 }, emotion: 'normal' },
+      { labelZh: '不行。推荐就是算法的开始。', labelEn: 'No. Recommendations are the gateway to algorithms.', resultZh: '投资人盯着你看了三秒钟。你没有移开目光。', resultEn: 'The investor stares at you for three seconds. You don\'t look away.', effect: { runway: -3, vision: 8, morale: 1 }, emotion: 'focused' },
     ],
   },
   {
@@ -486,8 +522,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'A partner leans in quietly: "Personally, I love your product. But the fund needs returns. Can you give me a numbers-based reason?"',
     tag: { zh: '私下交流', en: 'OFF THE RECORD', color: '#8b5cf6' },
     choices: [
-      { labelZh: '给他看核心用户的付费意愿数据', labelEn: 'Show core user willingness-to-pay data', effect: { runway: 5, composure: 4 }, emotion: 'focused' },
-      { labelZh: '"数字之外的价值，也是价值"', labelEn: '"Value beyond numbers is still value"', effect: { runway: -1, vision: 6, morale: 1 }, emotion: 'normal' },
+      { labelZh: '给他看核心用户的付费意愿数据', labelEn: 'Show core user willingness-to-pay data', resultZh: '他看着数据，眼睛亮了一下。"发我一份。"', resultEn: 'His eyes light up at the data. "Send me a copy."', effect: { runway: 5, composure: 4 }, emotion: 'focused' },
+      { labelZh: '"数字之外的价值，也是价值"', labelEn: '"Value beyond numbers is still value"', resultZh: '他叹了口气。"我个人同意。但基金不这么看。"', resultEn: 'He sighs. "I agree personally. But the fund doesn\'t see it that way."', effect: { runway: -1, vision: 6, morale: 1 }, emotion: 'normal' },
     ],
   },
   {
@@ -496,8 +532,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'The investor asks: "Can you share a real user story?"',
     tag: { zh: '打动人心', en: 'STORYTELLING', color: '#ec4899' },
     choices: [
-      { labelZh: '讲 Laisa 的故事', labelEn: 'Tell Laisa\'s story', effect: { runway: 4, composure: 5, vision: 3 }, emotion: 'happy' },
-      { labelZh: '讲产品帮助社恐用户交到朋友', labelEn: 'Tell how the product helped a shy user make friends', effect: { runway: 3, composure: 4, morale: 1 }, emotion: 'happy' },
+      { labelZh: '讲 Laisa 的故事', labelEn: 'Tell Laisa\'s story', resultZh: '你讲到 Laisa 说"第一次觉得可以做自己"时，对面有人摘下了眼镜擦了擦。', resultEn: 'When you quote Laisa saying "I could be myself for the first time," someone across the table takes off their glasses to wipe them.', effect: { runway: 4, composure: 5, vision: 3 }, emotion: 'happy' },
+      { labelZh: '讲产品帮助社恐用户交到朋友', labelEn: 'Tell how the product helped a shy user make friends', resultZh: '有人在你讲完后轻声说："这很好。"', resultEn: 'Someone whispers "That\'s good" after you finish.', effect: { runway: 3, composure: 4, morale: 1 }, emotion: 'happy' },
     ],
   },
   {
@@ -506,8 +542,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: '"Honestly, how is your product different from any social media\'s \'close friends\' feature?" — The room goes silent.',
     tag: { zh: '尖锐质疑', en: 'HARD CHALLENGE', color: '#ef4444' },
     choices: [
-      { labelZh: '"朋友圈是展示，我们是表达。这是本质区别。"', labelEn: '"They\'re about performing. We\'re about expressing. That\'s the fundamental difference."', effect: { runway: 4, composure: 4, vision: 4 }, emotion: 'focused' },
-      { labelZh: '"……"', labelEn: '"..."', effect: { composure: -10, runway: -3 }, emotion: 'stressed' },
+      { labelZh: '"朋友圈是展示，我们是表达。这是本质区别。"', labelEn: '"They\'re about performing. We\'re about expressing. That\'s the fundamental difference."', resultZh: '全场安静了两秒——然后提问的人说："说得好。"', resultEn: 'Two seconds of silence — then the questioner says: "Well put."', effect: { runway: 4, composure: 4, vision: 4 }, emotion: 'focused' },
+      { labelZh: '"……"', labelEn: '"..."', resultZh: '沉默太久了。有人开始看手机。', resultEn: 'The silence stretches too long. Someone checks their phone.', effect: { composure: -10, runway: -3 }, emotion: 'stressed' },
     ],
   },
   {
@@ -516,8 +552,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'While explaining the product vision, an investor puts down their phone and starts listening intently. The room\'s energy shifts.',
     tag: { zh: '转折时刻', en: 'BREAKTHROUGH', color: '#10b981' },
     choices: [
-      { labelZh: '趁热打铁，展示产品 demo', labelEn: 'Strike while it\'s hot, show the product demo', effect: { runway: 6, composure: 5, vision: 3 }, emotion: 'happy' },
-      { labelZh: '继续讲故事，保持节奏', labelEn: 'Keep the narrative going, maintain momentum', effect: { runway: 4, composure: 4, morale: 1 }, emotion: 'focused' },
+      { labelZh: '趁热打铁，展示产品 demo', labelEn: 'Strike while it\'s hot, show the product demo', resultZh: '你打开手机，展示了产品。投资人主动凑过来看。', resultEn: 'You open the app. The investor leans in to look.', effect: { runway: 6, composure: 5, vision: 3 }, emotion: 'happy' },
+      { labelZh: '继续讲故事，保持节奏', labelEn: 'Keep the narrative going, maintain momentum', resultZh: '你的声音越来越稳。他们在认真听。', resultEn: 'Your voice grows steadier. They\'re listening.', effect: { runway: 4, composure: 4, morale: 1 }, emotion: 'focused' },
     ],
   },
   {
@@ -526,8 +562,8 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'Mid-meeting, a Slack notification — a team member shares that a user wrote a long letter thanking the product for changing their life.',
     tag: { zh: 'Slack 消息', en: 'SLACK MSG', color: '#6366f1' },
     choices: [
-      { labelZh: '给投资人看这条消息', labelEn: 'Show the investor this message', effect: { runway: 3, composure: 5, morale: 1 }, emotion: 'happy' },
-      { labelZh: '先收起来，专心会议', labelEn: 'Save it, focus on the meeting', effect: { runway: 1, composure: 3 }, emotion: 'focused' },
+      { labelZh: '给投资人看这条消息', labelEn: 'Show the investor this message', resultZh: '投资人看完后抬起头，眼神不一样了。', resultEn: 'The investor reads it, then looks up. Something shifts in their eyes.', effect: { runway: 3, composure: 5, morale: 1 }, emotion: 'happy' },
+      { labelZh: '先收起来，专心会议', labelEn: 'Save it, focus on the meeting', resultZh: '你把手机扣过来，继续讲。但心里多了一份力量。', resultEn: 'You flip the phone face down and continue. But you feel stronger inside.', effect: { runway: 1, composure: 3 }, emotion: 'focused' },
     ],
   },
 ];
@@ -538,8 +574,8 @@ export const PROLOGUE_STREAM_EVENTS: StreamEvent[] = [
     textZh: '第一个投资人抬头看你："所以，一分钟介绍一下你们在做什么。"',
     textEn: 'The first investor looks up at you: "So, one minute. Tell me what you\'re building."',
     choices: [
-      { labelZh: '"一个让人真实表达自己的社交产品"', labelEn: '"A social product where people can be authentically themselves"', effect: { runway: 2, vision: 3 }, emotion: 'focused' },
-      { labelZh: '"反算法的社交平台"', labelEn: '"An anti-algorithm social platform"', effect: { runway: 1, composure: -3, vision: 4 }, emotion: 'normal' },
+      { labelZh: '"一个让人真实表达自己的社交产品"', labelEn: '"A social product where people can be authentically themselves"', resultZh: '投资人没打断你。这是个好迹象。', resultEn: 'The investor doesn\'t interrupt. A good sign.', effect: { runway: 2, vision: 3 }, emotion: 'focused' },
+      { labelZh: '"反算法的社交平台"', labelEn: '"An anti-algorithm social platform"', resultZh: '"反算法？"投资人重复了一遍，语气难以捉摸。', resultEn: '"Anti-algorithm?" The investor repeats it. Hard to read the tone.', effect: { runway: 1, composure: -3, vision: 4 }, emotion: 'normal' },
     ],
   },
   {
@@ -547,8 +583,8 @@ export const PROLOGUE_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"有意思。继续说——用户画像是什么？"',
     textEn: '"Interesting. Go on — what\'s the user profile?"',
     choices: [
-      { labelZh: '年轻人，厌倦了被算法支配的社交体验', labelEn: 'Young people tired of algorithm-driven social experiences', effect: { runway: 2, composure: 3 }, emotion: 'normal' },
-      { labelZh: '所有想要真实连接的人', labelEn: 'Anyone who wants genuine connection', effect: { runway: 1, vision: 3 }, emotion: 'happy' },
+      { labelZh: '年轻人，厌倦了被算法支配的社交体验', labelEn: 'Young people tired of algorithm-driven social experiences', resultZh: '"市场够大吗？"他开始做笔记了。', resultEn: '"Big enough market?" They start taking notes.', effect: { runway: 2, composure: 3 }, emotion: 'normal' },
+      { labelZh: '所有想要真实连接的人', labelEn: 'Anyone who wants genuine connection', resultZh: '投资人微微一笑。"范围有点大了。但我理解你的意思。"', resultEn: 'A faint smile. "That\'s broad. But I get what you mean."', effect: { runway: 1, vision: 3 }, emotion: 'happy' },
     ],
   },
   {
@@ -556,8 +592,8 @@ export const PROLOGUE_STREAM_EVENTS: StreamEvent[] = [
     textZh: '"最后一个问题——你凭什么觉得自己能赢？"',
     textEn: '"Last question — why do you think you can win?"',
     choices: [
-      { labelZh: '"因为我们真的在乎。"', labelEn: '"Because we genuinely care."', effect: { runway: 3, composure: 4, morale: 1 }, emotion: 'focused' },
-      { labelZh: '"因为用户告诉我们，这个东西是对的。"', labelEn: '"Because our users told us this is right."', effect: { runway: 2, vision: 4 }, emotion: 'happy' },
+      { labelZh: '"因为我们真的在乎。"', labelEn: '"Because we genuinely care."', resultZh: '你的声音很轻，但很稳。投资人合上了本子。', resultEn: 'Your voice is soft but steady. The investor closes their notebook.', effect: { runway: 3, composure: 4, morale: 1 }, emotion: 'focused' },
+      { labelZh: '"因为用户告诉我们，这个东西是对的。"', labelEn: '"Because our users told us this is right."', resultZh: '投资人笑了一下。"好的。我们再聊聊。"', resultEn: 'The investor smiles. "Alright. Let\'s talk more."', effect: { runway: 2, vision: 4 }, emotion: 'happy' },
     ],
   },
 ];
