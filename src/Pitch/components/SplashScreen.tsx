@@ -15,7 +15,7 @@ import jennyWreck from '../img/jenny_wreck.png';
 import iconEnergy from '../img/icon_energy.png';
 import iconComposure from '../img/icon_mood.png';
 import iconVision from '../img/icon_focus.png';
-import iconRunway from '../img/icon_followers.png';
+import iconRunway from '../img/icon_runway.png';
 import iconMorale from '../img/icon_connection.png';
 import svDesk from '../img/sv_desk.png';
 import svRest from '../img/sv_rest.png';
