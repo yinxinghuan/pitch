@@ -82,13 +82,13 @@ function stopClicks(): void {
 
 // Scene: noise volume, pad volume, filter cutoff, pad frequency, clicks on
 const SCENE: Record<string, { noise: number; pad: number; freq: number; padHz: number; clicks: boolean; clickVol: number }> = {
-  morning: { noise: 0.06, pad: 0.012, freq: 1200, padHz: 82, clicks: false, clickVol: 0 },
-  build:   { noise: 0.10, pad: 0.015, freq: 900,  padHz: 78, clicks: true,  clickVol: 0.015 },
-  pitch:   { noise: 0.04, pad: 0.020, freq: 600,  padHz: 73, clicks: false, clickVol: 0 },
-  night:   { noise: 0.03, pad: 0.018, freq: 500,  padHz: 70, clicks: false, clickVol: 0 },
-  stream:  { noise: 0.04, pad: 0.020, freq: 600,  padHz: 73, clicks: false, clickVol: 0 },
-  event:   { noise: 0.05, pad: 0.016, freq: 700,  padHz: 75, clicks: false, clickVol: 0 },
-  dayEnd:  { noise: 0.04, pad: 0.014, freq: 800,  padHz: 77, clicks: false, clickVol: 0 },
+  morning: { noise: 0.02, pad: 0.004, freq: 1200, padHz: 82, clicks: false, clickVol: 0 },
+  build:   { noise: 0.035, pad: 0.005, freq: 900,  padHz: 78, clicks: true,  clickVol: 0.006 },
+  pitch:   { noise: 0.015, pad: 0.007, freq: 600,  padHz: 73, clicks: false, clickVol: 0 },
+  night:   { noise: 0.01,  pad: 0.006, freq: 500,  padHz: 70, clicks: false, clickVol: 0 },
+  stream:  { noise: 0.015, pad: 0.007, freq: 600,  padHz: 73, clicks: false, clickVol: 0 },
+  event:   { noise: 0.018, pad: 0.005, freq: 700,  padHz: 75, clicks: false, clickVol: 0 },
+  dayEnd:  { noise: 0.015, pad: 0.005, freq: 800,  padHz: 77, clicks: false, clickVol: 0 },
 };
 
 const FADE = 1.5;
