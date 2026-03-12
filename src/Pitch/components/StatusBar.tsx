@@ -3,6 +3,7 @@ import iconEnergy from '../img/icon_energy.png';
 import iconComposure from '../img/icon_mood.png';
 import iconVision from '../img/icon_focus.png';
 import iconRunway from '../img/icon_followers.png';
+import { playCountTick } from '../utils/sounds';
 import './StatusBar.less';
 
 interface Props {
@@ -71,6 +72,7 @@ const StatusBar = React.memo(
       let elapsed = 0;
       let lastTime = performance.now();
       let rafId: number;
+      let prevDisplayVal = statAnimFrom[changed[0]];
 
       function step(now: number) {
         const dt = now - lastTime;
@@ -83,6 +85,11 @@ const StatusBar = React.memo(
         const t = Math.min(elapsed / STAT_DUR_MS, 1);
         const val = Math.round(from + (to - from) * t);
 
+        if (val !== prevDisplayVal) {
+          playCountTick(to > from);
+          prevDisplayVal = val;
+        }
+
         setAnim(prev => ({ ...prev, [key]: val }));
 
         if (t >= 1) {
@@ -92,6 +99,7 @@ const StatusBar = React.memo(
             onStatAnimEndRef.current?.();
             return;
           }
+          prevDisplayVal = statAnimFrom![changed[statIdx]];
         }
         rafId = requestAnimationFrame(step);
       }
