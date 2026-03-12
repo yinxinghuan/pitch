@@ -25,16 +25,18 @@ R2_ENDPOINT   = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 R2_PUBLIC     = "https://images.aiwaves.tech"
 
 POSTER_PROMPT = (
-    "square 1:1 composition, dramatic game cover art, anime illustration, emotional, "
+    "square 1:1 composition, game cover art, anime illustration, emotional, "
     "young woman with shoulder-length brown hair, green eyes, round black-framed glasses, "
-    "purple lavender hoodie, stressed and conflicted expression, looking down at her hands, "
-    "she is trapped inside a glass screen that is cracking and shattering around her, "
-    "hands pressing against the cracking glass from inside, desperate, "
-    "behind the cracks: falling stock charts, red countdown timer, dollar signs burning, "
-    "large glowing text 'PITCH' at the top, neon red and purple, glitch effect, "
-    "dark dramatic atmosphere, heavy shadows, cinematic lighting from below, "
-    "sense of pressure and isolation, anime visual novel style, high detail, "
-    "emotional tension, melancholy, the weight of a dream about to collapse"
+    "purple lavender hoodie, medium close-up shot from waist up, she is the main focus taking up most of the frame, "
+    "sitting in a dark conference room, hugging her knees, looking vulnerable and overwhelmed, "
+    "a single harsh spotlight shining down on her from above, "
+    "behind her in the darkness: looming silhouettes of businessmen in suits, "
+    "floating holographic charts and dollar signs fading in the dark, "
+    "text 'PITCH' in large bold clean solid white opaque letters on a solid dark banner bar at the very top, "
+    "no text shadow, no glowing text, clean flat solid white text on dark solid background strip, "
+    "dramatic chiaroscuro lighting, deep purple and amber tones, "
+    "loneliness, pressure, the weight of a decision, anime visual novel style, "
+    "high detail, melancholy atmosphere"
 )
 
 
@@ -122,12 +124,31 @@ def download_image(url: str, out_path: str):
             f.write(data)
 
 
+def make_square_ref(path: str) -> str:
+    """Pad ref image to 1:1 square (centering vertically) so API outputs 1:1."""
+    img = Image.open(path).convert("RGBA")
+    w, h = img.size
+    if w == h:
+        return path
+    side = max(w, h)
+    square = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    square.paste(img, ((side - w) // 2, (side - h) // 2))
+    out = path.replace(".png", "_square.png")
+    square.save(out)
+    print(f"  Padded {w}×{h} → {side}×{side}")
+    return out
+
+
 if __name__ == "__main__":
     print("=== PITCH Poster Generator (1:1, with Jenny ref) ===\n")
 
+    # Pre-crop ref to 1:1 so API outputs 1:1 natively
+    print("Preparing 1:1 ref image…")
+    square_ref = make_square_ref(REF_PATH)
+
     # Upload ref
-    print("Uploading jenny_idle.png to R2…")
-    ref_url = upload_ref(REF_PATH)
+    print("Uploading square ref to R2…")
+    ref_url = upload_ref(square_ref)
     print(f"  ✓ {ref_url}\n")
 
     # Generate
@@ -143,23 +164,16 @@ if __name__ == "__main__":
     download_image(cdn_url, OUT_PATH)
     print(f"  ✓ saved to {OUT_PATH}\n")
 
-    # API outputs 1024×1024, which is already 1:1 — just resize to 512×512
+    # Resize to 512×512 (API already outputs 1:1, just need final size)
     img = Image.open(OUT_PATH)
     w, h = img.size
     print(f"  Raw size: {w}×{h}")
-    target = 512
-    if w != target or h != target:
-        # Center crop to 1:1 if needed, then resize
-        side = min(w, h)
-        left = (w - side) // 2
-        top  = (h - side) // 2
-        img = img.crop((left, top, left + side, top + side))
-        img = img.resize((target, target), Image.LANCZOS)
-        img.save(OUT_PATH)
-        print(f"  ✓ Resized to {target}×{target}")
-    else:
-        img = img.resize((target, target), Image.LANCZOS)
-        img.save(OUT_PATH)
-        print(f"  ✓ Resized to {target}×{target}")
+    img = img.resize((512, 512), Image.LANCZOS)
+    img.save(OUT_PATH)
+    print(f"  ✓ Resized to 512×512")
+
+    # Clean up temp square ref
+    if square_ref != REF_PATH and os.path.exists(square_ref):
+        os.remove(square_ref)
 
     print("\nDone! Poster saved as poster.png (512×512)")
