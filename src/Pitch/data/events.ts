@@ -5,7 +5,7 @@ import algram_normal     from '../img/visitors/algram_normal.png';
 // algram_happy used in future events
 import ghostpixel_normal from '../img/visitors/ghostpixel_normal.png';
 import jmf_normal        from '../img/visitors/jmf_normal.png';
-import laisa_normal      from '../img/visitors/laisa_normal.png';
+import isaya_normal      from '../img/visitors/isaya_normal.png';
 import isabel_normal     from '../img/visitors/isabel_normal.png';
 
 // ── Story Events ─────────────────────────────────────────────────────────────
@@ -212,30 +212,30 @@ export const STORY_EVENTS: StoryEvent[] = [
     ],
   },
 
-  // ── Day 8: 访客 Laisa（忠实用户）──
+  // ── Day 8: 访客 Isaya（忠实用户）──
   {
     id: 'day8_build',
     day: 8,
     phase: 'build',
-    textZh: 'Laisa 来了。她是产品的忠实用户之一。\n\n"在你们的产品上，我第一次觉得可以做自己，"她说。"没有人评判我，没有算法决定什么值得被看见。我只是……写下真实的感受，然后有人回应了。"',
-    textEn: 'Laisa stopped by. She\'s one of the product\'s most loyal users.\n\n"On your product, I felt like I could be myself for the first time," she says. "No one judging, no algorithm deciding what\'s worth seeing. I just... wrote how I really felt, and someone responded."',
+    textZh: 'Isaya 来了。她是产品的忠实用户之一。\n\n"在你们的产品上，我第一次觉得可以做自己，"她说。"没有人评判我，没有算法决定什么值得被看见。我只是……写下真实的感受，然后有人回应了。"',
+    textEn: 'Isaya stopped by. She\'s one of the product\'s most loyal users.\n\n"On your product, I felt like I could be myself for the first time," she says. "No one judging, no algorithm deciding what\'s worth seeing. I just... wrote how I really felt, and someone responded."',
     jennyEmotion: 'happy',
-    visitorImg: laisa_normal,
-    visitorName: 'Laisa',
+    visitorImg: isaya_normal,
+    visitorName: 'Isaya',
     choices: [
       {
         labelZh: '"谢谢你告诉我这些。这就是我做这件事的原因。"',
         labelEn: '"Thank you for telling me this. This is why I built this."',
-        resultZh: 'Laisa 笑了。你很久没有这么确定过自己在做的事是对的。',
-        resultEn: 'Laisa smiles. You haven\'t felt this certain about your work in a long time.',
+        resultZh: 'Isaya 笑了。你很久没有这么确定过自己在做的事是对的。',
+        resultEn: 'Isaya smiles. You haven\'t felt this certain about your work in a long time.',
         effect: { composure: 10, vision: 6, morale: 2 },
         emotion: 'happy',
       },
       {
         labelZh: '"但我不知道还能维持多久……"',
         labelEn: '"But I don\'t know how much longer we can keep this going..."',
-        resultZh: 'Laisa 握了握你的手。"那就让我们珍惜还在的时候。"',
-        resultEn: 'Laisa squeezes your hand. "Then let\'s cherish the time we have."',
+        resultZh: 'Isaya 握了握你的手。"那就让我们珍惜还在的时候。"',
+        resultEn: 'Isaya squeezes your hand. "Then let\'s cherish the time we have."',
         effect: { composure: 6, vision: 4, morale: 1 },
         emotion: 'sad',
       },
@@ -532,7 +532,7 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     textEn: 'The investor asks: "Can you share a real user story?"',
     tag: { zh: '打动人心', en: 'STORYTELLING', color: '#ec4899' },
     choices: [
-      { labelZh: '讲 Laisa 的故事', labelEn: 'Tell Laisa\'s story', resultZh: '你讲到 Laisa 说"第一次觉得可以做自己"时，对面有人摘下了眼镜擦了擦。', resultEn: 'When you quote Laisa saying "I could be myself for the first time," someone across the table takes off their glasses to wipe them.', effect: { runway: 4, composure: 5, vision: 3 }, emotion: 'happy' },
+      { labelZh: '讲 Isaya 的故事', labelEn: 'Tell Isaya\'s story', resultZh: '你讲到 Isaya 说"第一次觉得可以做自己"时，对面有人摘下了眼镜擦了擦。', resultEn: 'When you quote Isaya saying "I could be myself for the first time," someone across the table takes off their glasses to wipe them.', effect: { runway: 4, composure: 5, vision: 3 }, emotion: 'happy' },
       { labelZh: '讲产品帮助社恐用户交到朋友', labelEn: 'Tell how the product helped a shy user make friends', resultZh: '有人在你讲完后轻声说："这很好。"', resultEn: 'Someone whispers "That\'s good" after you finish.', effect: { runway: 3, composure: 4, morale: 1 }, emotion: 'happy' },
     ],
   },
