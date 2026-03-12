@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import iconEnergy    from '../img/icon_energy.png';
 import iconComposure from '../img/icon_mood.png';
 import iconVision    from '../img/icon_focus.png';
-import iconRunway    from '../img/icon_followers.png';
+import iconRunway    from '../img/icon_runway.png';
 import { useLocale } from '../i18n';
 import './HelpPanel.less';
 
