@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/bsod/',
+  base: '/pitch/',
   plugins: [react()],
   css: {
     preprocessorOptions: {

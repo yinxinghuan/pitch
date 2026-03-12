@@ -1,0 +1,470 @@
+.pt-stream {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // ── Background illustration ────────────────────────────────────────────────
+  &__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Dark gradient overlay — top lighter, bottom opaque for card readability
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0.15) 30%,
+        rgba(0, 0, 0, 0.55) 60%,
+        rgba(0, 0, 0, 0.88) 80%,
+        rgba(0, 0, 0, 0.96) 100%
+      );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  // ── Top bar ────────────────────────────────────────────────────────────────
+  &__topbar {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+  }
+
+  &__live-badge {
+    background: #e53935;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    flex: 1;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Noto Sans SC', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__viewers {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Share Tech Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  &__progress {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.25);
+    font-family: 'Share Tech Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  // ── Video call tiles — horizontal band, constant shuffling ──────────────────
+  &__video-area {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__vtile {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1.5px solid rgba(148, 163, 184, 0.12);
+    border-radius: 10px;
+    padding: 8px 6px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    // Smooth spring transition for ALL properties
+    transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-style: preserve-3d;
+
+    // ── 4 slots on a horizontal band, center of area ──
+    // slot0 = furthest back (smallest), slot3 = front (biggest)
+    &--slot0 {
+      width: 80px; height: 72px;
+      bottom: 30%; left: 5%;
+      z-index: 1; opacity: 0.5;
+      transform: scale(0.85) rotate(-4deg) rotateY(-25deg);
+      filter: brightness(0.6);
+    }
+    &--slot1 {
+      width: 100px; height: 86px;
+      bottom: 24%; left: 22%;
+      z-index: 2; opacity: 0.7;
+      transform: scale(0.92) rotate(2deg) rotateY(-12deg);
+      filter: brightness(0.75);
+    }
+    &--slot2 {
+      width: 115px; height: 98px;
+      bottom: 18%; left: 44%;
+      z-index: 3; opacity: 0.88;
+      transform: scale(0.97) rotate(-1deg) rotateY(10deg);
+      filter: brightness(0.9);
+    }
+    &--slot3 {
+      width: 180px; height: 148px;
+      bottom: 10%; left: 24%;
+      z-index: 10; opacity: 1;
+      filter: brightness(1);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow:
+        0 0 20px rgba(99, 102, 241, 0.2),
+        0 6px 24px rgba(0, 0, 0, 0.4);
+      background: rgba(20, 25, 50, 0.85);
+      animation: pt-vtile-float 3s ease-in-out infinite;
+    }
+
+    &--you {
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+  }
+
+  &__vtile-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    transition: all 0.7s;
+
+    .pt-stream__vtile--slot3 & {
+      width: 44px;
+      height: 44px;
+      font-size: 15px;
+    }
+  }
+
+  &__vtile-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    transition: all 0.5s;
+
+    .pt-stream__vtile--slot3 & {
+      font-size: 11px;
+      color: #fff;
+    }
+  }
+
+  &__vtile-role {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 7px;
+    color: rgba(148, 163, 184, 0.3);
+  }
+
+  &__vtile-bars {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 14px;
+
+    span {
+      width: 3px;
+      background: #6366f1;
+      border-radius: 2px;
+      animation: pt-stream-speak 0.5s ease-in-out infinite alternate;
+
+      &:nth-child(1) { animation-delay: 0s; }
+      &:nth-child(2) { animation-delay: 0.12s; }
+      &:nth-child(3) { animation-delay: 0.24s; }
+      &:nth-child(4) { animation-delay: 0.36s; }
+    }
+  }
+
+  &__vtile-you {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    color: #f59e0b;
+    letter-spacing: 0.12em;
+    opacity: 0.5;
+  }
+
+  // ── Volatile event flash ───────────────────────────────────────────────────
+  &__volatile {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+    animation: pt-stream-volatile-pop 2.8s ease forwards;
+    text-align: center;
+    filter: drop-shadow(0 0 20px currentColor);
+
+    &--viral       { color: #fbbf24; }
+    &--boost       { color: #38bdf8; }
+    &--controversy { color: #f87171; }
+    &--flop        { color: #94a3b8; }
+    &--normal      { color: #86efac; }
+  }
+
+  &__volatile-backdrop {
+    position: absolute;
+    inset: -20px -28px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    z-index: -1;
+  }
+
+  &__volatile-kaomoji {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  &__volatile-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 24px currentColor;
+  }
+
+  &__volatile-delta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  &__volatile-desc {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.4;
+    margin-top: 2px;
+    max-width: 200px;
+    filter: none; // don't inherit the color glow
+  }
+
+  // ── Featured event card ────────────────────────────────────────────────────
+  &__card {
+    position: relative;
+    z-index: 5;
+    padding: 16px 24px 18px;
+    background: rgba(5, 10, 25, 0.92);
+    border-top: 1px solid rgba(96, 165, 250, 0.2);
+    flex-shrink: 0;
+    transition: border-top-color 0.2s;
+
+    &--special {
+      animation: pt-stream-card-special-in 0.3s ease forwards;
+    }
+  }
+
+
+  &__card-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(96, 165, 250, 0.6);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+
+    &--special {
+      display: inline-block;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+      background: rgba(0, 0, 0, 0.4);
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px currentColor;
+      animation: pt-stream-tag-in 0.25s ease forwards;
+    }
+  }
+
+  &__card-text {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e2e8f0;
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+
+  // ── Timer ──────────────────────────────────────────────────────────────────
+  &__timer-wrap {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__timer-bar {
+    height: 3px;
+    border-radius: 2px;
+    transition: width 0.08s linear, background 0.3s ease;
+    transform-origin: left;
+  }
+
+  &__timer-hint {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    transition: color 0.3s ease;
+  }
+
+  // ── Choice buttons ─────────────────────────────────────────────────────────
+  &__choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  // End stream button — shown after last event
+  &__end-btn {
+    all: unset;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 12px 0 20px;
+    background: #4a3828;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: rgba(200, 170, 120, 0.8);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.06s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(180, 150, 100, 0.3) 0, rgba(180, 150, 100, 0.3) 2px, transparent 2px),
+        repeating-conic-gradient(#281808 0% 25%, #4a3828 0% 50%) 0 0 / 4px 4px;
+    }
+
+    &:active {
+      transform: translateY(3px);
+      &::after { height: 4px; }
+    }
+  }
+
+  // Kairosoft blue button — stream choice
+  &__choice {
+    all: unset;
+    display: block;
+    padding: 12px 16px 20px;
+    background: #2858c8;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Noto Sans SC', sans-serif;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.06s, opacity 0.2s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 10px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(160, 190, 255, 0.38) 0, rgba(160, 190, 255, 0.38) 2px, transparent 2px),
+        repeating-conic-gradient(#102878 0% 25%, #2858c8 0% 50%) 0 0 / 4px 4px;
+    }
+
+    &:active:not([disabled]) {
+      transform: translateY(4px);
+      &::after { height: 4px; }
+    }
+
+    &:disabled {
+      color: #1e3a8a;
+      text-shadow: none;
+      cursor: default;
+    }
+  }
+}
+
+@keyframes pt-stream-speak {
+  from { height: 3px; }
+  to   { height: 12px; }
+}
+
+@keyframes pt-vtile-float {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1.02); }
+  50%      { transform: translateY(-6px) rotate(0.5deg) scale(1.04); }
+}
+
+@keyframes pt-stream-tag-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pt-stream-card-special-in {
+  0%   { transform: translateY(6px); opacity: 0.6; }
+  100% { transform: translateY(0);   opacity: 1; }
+}
+
+@keyframes pt-stream-volatile-pop {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-50%) scale(0.5); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(-50%) scale(1.15); }
+  20%  { opacity: 1; transform: translateX(-50%) translateY(-50%) scale(1.0); }
+  75%  { opacity: 1; transform: translateX(-50%) translateY(-50%) scale(1.0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-65%) scale(0.9); }
+}

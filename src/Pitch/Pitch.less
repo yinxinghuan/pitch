@@ -1,0 +1,261 @@
+// ── CSS Variables ─────────────────────────────────────────────────────────────
+:root {
+  --pt-bg:         #f8f6f0;
+  --pt-energy:     #e06820;
+  --pt-composure:  #6366f1;
+  --pt-vision:     #10b981;
+  --pt-runway:     #f59e0b;
+  --pt-morale:     #ec4899;
+  --pt-danger:     #ef4444;
+  --pt-text:       #1e293b;
+  --pt-muted:      rgba(30, 41, 59, 0.5);
+}
+
+// ── Root ──────────────────────────────────────────────────────────────────────
+.pt {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: #1e293b;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background: #f8f6f0;
+}
+
+// ── Watermark ─────────────────────────────────────────────────────────────────
+.pt__watermark {
+  position: absolute;
+  top: 180px;
+  right: 16px;
+  width: 72px;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 100;
+}
+
+// ── Room Background ────────────────────────────────────────────────────────────
+.pt__bg-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  transition: filter 0.3s ease;
+
+  &--blur {
+    filter: blur(5px);
+    transform: scale(1.04);
+  }
+}
+
+.pt__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  pointer-events: none;
+  transition: filter 1.2s ease;
+
+  &.pt--night    { filter: brightness(0.7) saturate(0.8); }
+  &.pt--pitch    { filter: brightness(0.92) sepia(0.15) hue-rotate(-8deg) saturate(1.1); }
+  &.pt--morning  { filter: brightness(1.15) sepia(0.12) saturate(0.95) hue-rotate(8deg); }
+  &.pt--build    { filter: brightness(1.25) saturate(1.15) hue-rotate(4deg); }
+}
+
+// Light vignette overlay
+.pt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.2) 0%,
+      transparent 20%,
+      transparent 55%,
+      rgba(0,0,0,0.4) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+// ── Start Screen ──────────────────────────────────────────────────────────────
+.pt__start-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  z-index: 0;
+  filter: grayscale(0.3) brightness(0.55);
+}
+
+.pt__start-noise {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  z-index: 1;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+
+.pt__start {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-bottom: 56px;
+  background: linear-gradient(to bottom,
+    transparent 40%,
+    rgba(15, 23, 42, 0.65) 70%,
+    rgba(15, 23, 42, 0.85) 100%
+  );
+}
+
+.pt__start-content {
+  width: 100%;
+  padding: 0 28px;
+}
+
+.pt__start-title {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-weight: 900;
+  font-size: 96px;
+  color: #f8fafc;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  position: relative;
+  text-shadow:
+    0 0 24px rgba(99, 102, 241, 0.5),
+    0 0 60px rgba(99, 102, 241, 0.2);
+  animation: pt-title-pulse 3s ease-in-out infinite;
+}
+
+.pt__start-tagline {
+  font-family: 'Inter', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.6);
+  letter-spacing: 0.28em;
+  margin: 4px 0 20px;
+  text-transform: uppercase;
+}
+
+.pt__start-subtitle {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 16px;
+  color: rgba(148, 163, 184, 0.5);
+  letter-spacing: 0.06em;
+  margin: 0 0 32px;
+}
+
+// Modern launch button
+.pt__start-btn {
+  all: unset;
+  display: inline-block;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow:
+    0 4px 16px rgba(99, 102, 241, 0.35),
+    0 1px 3px rgba(0, 0, 0, 0.15);
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+  }
+}
+
+// ── Character Sprite ───────────────────────────────────────────────────────────
+.pt__char-area {
+  position: absolute;
+  bottom: -260px;
+  right: -160px;
+  height: 135dvh;
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  z-index: 3;
+  pointer-events: none;
+  animation: pt-char-enter 0.5s ease forwards;
+  transition: height 0.3s ease, bottom 0.3s ease, right 0.3s ease;
+
+  &--event {
+    height: 155dvh;
+    bottom: -200px;
+    right: -280px;
+  }
+}
+
+.pt__char {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 32px rgba(0, 0, 0, 0.4));
+  transition: filter 0.4s ease;
+}
+
+// ── Bottom Panel ───────────────────────────────────────────────────────────────
+.pt__panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pt-title-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+
+@keyframes pt-char-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── UI saturation ─────────────────────────────────────────────────────────────
+.pt-status,
+.pt__panel,
+.pt-event,
+.pt-stream,
+.pt-dayend,
+.pt-death,
+.ar {
+  filter: saturate(0.75);
+}
+
+// ── Global scrollbar ──────────────────────────────────────────────────────────
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(30, 41, 59, 0.2) transparent;
+}

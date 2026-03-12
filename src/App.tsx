@@ -1,10 +1,10 @@
-import BSOD from './BSOD/BSOD';
+import Pitch from './Pitch/Pitch';
 import './App.less';
 
 function App() {
   return (
     <div className="app">
-      <BSOD />
+      <Pitch />
     </div>
   );
 }
