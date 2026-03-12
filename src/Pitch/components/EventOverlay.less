@@ -1,0 +1,262 @@
+.pt-event {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    transparent 45%,
+    rgba(5, 10, 25, 0.55) 65%,
+    rgba(5, 10, 25, 0.75) 100%
+  );
+  animation: pt-event-in 0.25s ease forwards;
+  overflow: visible; // allow visitor avatar to overflow above card
+
+  &__card {
+    width: 100%;
+    padding: 16px 44px 12px;
+    background: rgba(8, 16, 38, 0.97);
+    border-top: 1px solid rgba(96, 165, 250, 0.18);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(96, 165, 250, 0.35) 30%,
+        rgba(96, 165, 250, 0.35) 70%,
+        transparent
+      );
+    }
+  }
+
+  // ── Visitor header row ───────────────────────────────────────────────────
+  &__visitor-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 12px;
+    margin-top: -52px; // pull avatar above the card top edge
+    animation: pt-event-visitor-in 0.35s ease forwards;
+  }
+
+  // Circular avatar
+  &__visitor-avatar {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 3px solid rgba(96, 165, 250, 0.65);
+    box-shadow:
+      0 0 0 1px rgba(96, 165, 250, 0.18),
+      0 4px 24px rgba(0, 0, 0, 0.7);
+    background: rgba(8, 16, 38, 0.9);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      pointer-events: none;
+    }
+  }
+
+  // Visitor name tag
+  &__visitor-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: rgba(96, 165, 250, 0.9);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-bottom: 28px;
+    line-height: 1.8;
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  // ── Stat delta feedback ──────────────────────────────────────────────────
+  &__feedback {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 0 8px;
+    cursor: pointer;
+    animation: pt-event-feedback-in 0.25s ease both;
+  }
+
+  &__feedback-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__feedback-hint {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: rgba(180, 190, 210, 0.75);
+    letter-spacing: 0.1em;
+    animation: pt-event-hint-blink 1.2s ease infinite;
+  }
+
+  &__feedback-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+
+    &--pos {
+      background: rgba(74, 222, 128, 0.14);
+      border: 1px solid rgba(74, 222, 128, 0.45);
+      color: #4ade80;
+    }
+
+    &--neg {
+      background: rgba(248, 113, 113, 0.14);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      color: #f87171;
+    }
+  }
+
+  &__feedback-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  &__text {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.8;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    margin: 0 0 18px;
+    animation: pt-event-text-in 0.3s ease 0.05s both;
+  }
+
+  &__choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  // Kairosoft blue button — choice
+  &__choice {
+    all: unset;
+    display: block;
+    padding: 11px 16px 19px;
+    background: #2858c8;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Noto Sans SC', sans-serif;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.06s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 10px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(160, 190, 255, 0.38) 0, rgba(160, 190, 255, 0.38) 2px, transparent 2px),
+        repeating-conic-gradient(#102878 0% 25%, #2858c8 0% 50%) 0 0 / 4px 4px;
+    }
+
+    &:active {
+      transform: translateY(4px);
+      &::after { height: 4px; }
+    }
+  }
+
+  // Kairosoft muted brown — dismiss
+  &__dismiss {
+    all: unset;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 0 18px;
+    background: #4a3828;
+    border: 3px solid #281408;
+    border-radius: 2px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: rgba(200, 170, 120, 0.65);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.06s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(180, 150, 100, 0.3) 0, rgba(180, 150, 100, 0.3) 2px, transparent 2px),
+        repeating-conic-gradient(#281808 0% 25%, #4a3828 0% 50%) 0 0 / 4px 4px;
+    }
+
+    &:active {
+      transform: translateY(3px);
+      &::after { height: 4px; }
+    }
+  }
+}
+
+@keyframes pt-event-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pt-event-feedback-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pt-event-hint-blink {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes pt-event-visitor-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pt-event-text-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
