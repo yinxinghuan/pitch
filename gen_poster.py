@@ -25,14 +25,16 @@ R2_ENDPOINT   = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 R2_PUBLIC     = "https://images.aiwaves.tech"
 
 POSTER_PROMPT = (
-    "square 1:1 composition, game cover art, anime illustration, "
+    "square 1:1 composition, dramatic game cover art, anime illustration, emotional, "
     "young woman with shoulder-length brown hair, green eyes, round black-framed glasses, "
-    "purple lavender hoodie, sitting at desk with laptop, confident smile, "
-    "cyberpunk neon city skyline visible through large window behind her, "
-    "dark moody atmosphere, purple and indigo lighting, "
-    "large stylized text 'PITCH' glowing in neon above her, "
-    "startup office environment, monitors and code on screens, "
-    "cinematic composition, high detail, anime visual novel style, soft cel shading"
+    "purple lavender hoodie, stressed and conflicted expression, looking down at her hands, "
+    "she is trapped inside a glass screen that is cracking and shattering around her, "
+    "hands pressing against the cracking glass from inside, desperate, "
+    "behind the cracks: falling stock charts, red countdown timer, dollar signs burning, "
+    "large glowing text 'PITCH' at the top, neon red and purple, glitch effect, "
+    "dark dramatic atmosphere, heavy shadows, cinematic lighting from below, "
+    "sense of pressure and isolation, anime visual novel style, high detail, "
+    "emotional tension, melancholy, the weight of a dream about to collapse"
 )
 
 
