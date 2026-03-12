@@ -229,7 +229,7 @@ const StreamSession = React.memo(
             </div>
           )}
           <p className="pt-stream__card-text">
-            {resultText ?? (pendingEnd && lastResultRef.current) ?? getText(event.textZh, event.textEn)}
+            {resultText ?? (pendingEnd ? lastResultRef.current : null) ?? getText(event.textZh, event.textEn)}
           </p>
 
           {!resultText && !pendingEnd && (
