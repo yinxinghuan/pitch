@@ -10,7 +10,9 @@ interface Props {
   eventIndex: number;
   totalEvents: number;
   onChoose: (index: number, speed: ResponseSpeed) => void;
+  onAdvance: () => void;
   lastFollowerEvent?: { delta: number; type: VolatileType; key: number } | null;
+  resultPending?: boolean;
   pendingEnd?: boolean;
   onStreamEnd?: () => void;
 }
@@ -44,21 +46,24 @@ const VOLATILE_CONFIG: Record<VolatileType, {
 
 const StreamSession = React.memo(
   forwardRef<HTMLDivElement, Props>(function StreamSession(
-    { event, eventIndex, totalEvents, onChoose, lastFollowerEvent, pendingEnd, onStreamEnd }, ref
+    { event, eventIndex, totalEvents, onChoose, onAdvance, lastFollowerEvent, resultPending, pendingEnd, onStreamEnd }, ref
   ) {
     const [layoutOrder, setLayoutOrder] = useState([0, 1, 2, 3]);
     const [elapsed, setElapsed] = useState(0);
     const [timedOut, setTimedOut] = useState(false);
     const [flash, setFlash] = useState<{ delta: number; type: VolatileType; key: number } | null>(null);
-    const [resultText, setResultText] = useState<string | null>(null);
     const [cardMinH, setCardMinH] = useState<number | undefined>(undefined);
     const startRef = useRef(Date.now());
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const chosenRef = useRef(false);
     const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const pendingChoiceRef = useRef<{ index: number; speed: ResponseSpeed } | null>(null);
     const lastResultRef = useRef<string | null>(null);
+    const chosenIndexRef = useRef<number>(0);
     const cardRef = useRef<HTMLDivElement | null>(null);
+
+    // Derive resultText from chosen option + resultPending flag
+    const chosenChoice = resultPending ? event.choices[chosenIndexRef.current] : null;
+    const resultText = chosenChoice ? getText(chosenChoice.resultZh ?? '', chosenChoice.resultEn ?? '') : null;
 
     useEffect(() => {
       if (!lastFollowerEvent || lastFollowerEvent.delta === 0) return;
@@ -71,9 +76,7 @@ const StreamSession = React.memo(
       chosenRef.current = false;
       setElapsed(0);
       setTimedOut(false);
-      setResultText(null);
       setCardMinH(undefined);
-      pendingChoiceRef.current = null;
       startRef.current = Date.now();
 
       timerRef.current = setInterval(() => {
@@ -118,22 +121,9 @@ const StreamSession = React.memo(
       if (timerRef.current) clearInterval(timerRef.current);
       const e = Date.now() - startRef.current;
       const speed: ResponseSpeed = e < FAST_THRESHOLD ? 'fast' : e < SLOW_THRESHOLD ? 'normal' : 'slow';
+      chosenIndexRef.current = index;
       const c = event.choices[index];
-      const rText = getText(c.resultZh ?? '', c.resultEn ?? '');
-      if (rText) {
-        setResultText(rText);
-        lastResultRef.current = rText;
-        pendingChoiceRef.current = { index, speed };
-      } else {
-        onChoose(index, speed);
-      }
-    };
-
-    const handleDismissResult = () => {
-      if (!pendingChoiceRef.current) return;
-      const { index, speed } = pendingChoiceRef.current;
-      pendingChoiceRef.current = null;
-      setResultText(null);
+      lastResultRef.current = getText(c.resultZh ?? '', c.resultEn ?? '');
       onChoose(index, speed);
     };
 
@@ -149,7 +139,7 @@ const StreamSession = React.memo(
     const flashConfig = flash ? VOLATILE_CONFIG[flash.type] : null;
 
     return (
-      <div className="pt-stream" ref={ref} onPointerDown={resultText ? handleDismissResult : undefined}>
+      <div className="pt-stream" ref={ref} onPointerDown={resultPending ? onAdvance : undefined}>
         <img className="pt-stream__bg" src={bgStream} alt="" draggable={false} />
         <div className="pt-stream__overlay" />
 
@@ -236,7 +226,7 @@ const StreamSession = React.memo(
             {resultText ?? (pendingEnd ? lastResultRef.current : null) ?? getText(event.textZh, event.textEn)}
           </p>
 
-          {!resultText && !pendingEnd && (
+          {!resultPending && !pendingEnd && (
             <div className="pt-stream__timer-wrap">
               <div
                 className="pt-stream__timer-bar"
@@ -248,7 +238,7 @@ const StreamSession = React.memo(
             </div>
           )}
 
-          {resultText ? (
+          {resultPending ? (
             <div className="pt-stream__result-hint">
               {getText('点击继续', 'Tap to continue')}
             </div>

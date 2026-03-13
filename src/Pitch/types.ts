@@ -136,6 +136,7 @@ export interface GameState {
   streamRunwayGained: number;
   streamLastEvent: { delta: number; type: VolatileType; key: number } | null;
   streamPendingEnd: boolean;
+  streamResultPending: boolean;
   dayLogStart: GameStats;
   pitchedToday: boolean;
   showDrainNotice: boolean;
