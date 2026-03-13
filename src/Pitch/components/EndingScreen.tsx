@@ -33,7 +33,7 @@ const EndingScreen = React.memo(
     { endingType, runway, morale, onRestart }, ref
   ) {
     const jennySrc = ENDING_JENNY[endingType];
-    const runwayMonths = (runway / 10).toFixed(1);
+    const runwayK = Math.round(runway * 10);
 
     // ── Shutdown ending: 404 style ──────────────────────────────────
     if (endingType === 'shutdown') {
@@ -51,7 +51,7 @@ const EndingScreen = React.memo(
             </p>
             <p className="pt-ending__shutdown-cmd">$ shutdown -h now</p>
             <div className="pt-ending__shutdown-stats">
-              <span>{getText('资金', 'Runway')}: {runwayMonths}mo</span>
+              <span>{getText('资金', 'Runway')}: {runwayK}K</span>
               <span>{getText('士气', 'Morale')}: {morale} / 10</span>
             </div>
             <button className="pt-ending__shutdown-btn" onPointerDown={onRestart}>
@@ -80,7 +80,7 @@ const EndingScreen = React.memo(
           <div className="pt-ending__stats">
             <div className="pt-ending__stat">
               <span className="pt-ending__stat-num" style={{ color: 'var(--pt-runway)' }}>
-                {runwayMonths}mo
+                {runwayK}K
               </span>
               <span className="pt-ending__stat-label">{getText('最终资金', 'final runway')}</span>
             </div>

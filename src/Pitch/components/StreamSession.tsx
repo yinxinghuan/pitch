@@ -192,7 +192,7 @@ const StreamSession = React.memo(
             <span className="pt-stream__volatile-kaomoji">{flashConfig.kaomoji}</span>
             <span className="pt-stream__volatile-label">{flashConfig.label}</span>
             <span className="pt-stream__volatile-delta">
-              {flash.delta > 0 ? '+' : ''}{flash.delta}
+              {flash.delta > 0 ? '+' : ''}{flash.delta * 10}K
             </span>
             <span className="pt-stream__volatile-desc">
               {getText(flashConfig.descZh, flashConfig.descEn)}
@@ -202,7 +202,7 @@ const StreamSession = React.memo(
         {flash && !flashConfig && (
           <div key={flash.key} className="pt-stream__volatile pt-stream__volatile--normal">
             <span className="pt-stream__volatile-delta">
-              {flash.delta > 0 ? '+' : ''}{flash.delta}
+              {flash.delta > 0 ? '+' : ''}{flash.delta * 10}K
             </span>
           </div>
         )}

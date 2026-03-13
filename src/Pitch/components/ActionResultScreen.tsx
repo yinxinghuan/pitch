@@ -162,7 +162,7 @@ function EffectReadout({ action, getText }: { action: GameAction; getText: (zh: 
             draggable={false}
           />
           <span className="ar__effect-val">
-            {r.val > 0 ? '+' : ''}{r.val}
+            {r.val > 0 ? '+' : ''}{r.key === 'runway' ? `${r.val * 10}K` : r.val}
           </span>
         </div>
       ))}

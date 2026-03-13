@@ -57,7 +57,7 @@ const DayEndScreen = React.memo(
 
     const line = getText(DAY_LINES_ZH[day] ?? '', DAY_LINES_EN[day] ?? '');
     const runwayDeltaDisplay = deltas.runway !== 0
-      ? `${deltas.runway > 0 ? '+' : ''}${(deltas.runway / 10).toFixed(1)}mo`
+      ? `${deltas.runway > 0 ? '+' : ''}${deltas.runway * 10}K`
       : '0';
 
     return (

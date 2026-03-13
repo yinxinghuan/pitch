@@ -45,7 +45,7 @@ const DeathScreen = React.memo(
   forwardRef<HTMLDivElement, Props>(function DeathScreen({ cause, deathContext, runway, onRestart }, ref) {
     const color = CAUSE_COLOR[cause];
     const displayVal = deathContext?.displayValue ?? 0;
-    const runwayDisplay = cause === 'runway' ? `${(displayVal / 10).toFixed(1)}mo` : String(displayVal);
+    const runwayDisplay = cause === 'runway' ? `${Math.round(displayVal * 10)}K` : String(displayVal);
     return (
       <div className={`pt-death pt-death--${cause}`} ref={ref}>
         <img className="pt-death__bg" src={bgDark} alt="" draggable={false} />
@@ -73,7 +73,7 @@ const DeathScreen = React.memo(
 
           <p className="pt-death__desc">{t(`deathDesc_${cause}`)}</p>
           <p className="pt-death__followers">
-            {getText('最终资金', 'Final runway')}{' '}<strong>{(runway / 10).toFixed(1)}mo</strong>
+            {getText('最终资金', 'Final runway')}{' '}<strong>{Math.round(runway * 10)}K</strong>
           </p>
           <button className="pt-death__btn" onPointerDown={onRestart}>
             PLAY AGAIN

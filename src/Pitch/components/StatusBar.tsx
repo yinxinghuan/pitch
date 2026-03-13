@@ -126,7 +126,7 @@ const StatusBar = React.memo(
             <div className="pt-status__flw">
               <img className="pt-status__flw-icon" src={iconRunway} alt="" draggable={false} />
               <span className={`pt-status__flw-num${statAnimFrom && anim.runway !== runway ? ' pt-status__flw-num--counting' : ''}`}>
-                ${runwayK}K
+                {runwayK}K
               </span>
             </div>
             <span className="pt-status__help-hint">?</span>
