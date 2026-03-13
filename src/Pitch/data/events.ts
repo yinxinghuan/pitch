@@ -126,6 +126,34 @@ export const STORY_EVENTS: StoryEvent[] = [
     ],
   },
 
+  // ── Day 4 night: 服务器事故 ──
+  {
+    id: 'day4_night',
+    day: 4,
+    phase: 'night',
+    textZh: '凌晨两点，手机被 Slack 震醒。服务器挂了。\n\n用户数据没丢，但云服务商发来了一封邮件：流量超标，本月账单翻了三倍。你盯着那个数字，半天没说话。',
+    textEn: 'Slack wakes you at 2 AM. Server\'s down.\n\nNo data lost, but the cloud provider sent a bill: traffic overage, triple the usual cost this month. You stare at the number in silence.',
+    jennyEmotion: 'stressed',
+    choices: [
+      {
+        labelZh: '升级套餐，保证稳定性',
+        labelEn: 'Upgrade the plan, ensure stability',
+        resultZh: '花了一笔钱，但至少服务恢复了。用户什么都没感觉到。',
+        resultEn: 'Costly, but service is restored. Users didn\'t notice a thing.',
+        effect: { runway: -4, composure: 3 },
+        emotion: 'normal',
+      },
+      {
+        labelZh: '手动修复，能省则省',
+        labelEn: 'Fix it manually, save every penny',
+        resultZh: '折腾到早上六点。省了一些钱，但你整个人都废了。',
+        resultEn: 'You hack away until 6 AM. Saved some money, but you\'re wrecked.',
+        effect: { runway: -2, energy: -12, composure: -6 },
+        emotion: 'tired',
+      },
+    ],
+  },
+
   // ── Day 5: 访客 ghostpixel ──
   {
     id: 'day5_build',
@@ -179,6 +207,34 @@ export const STORY_EVENTS: StoryEvent[] = [
         resultZh: '你盯着他们的产品页面看了很久，越看越觉得自己好渺小。',
         resultEn: 'You stare at their product page for a long time. The longer you look, the smaller you feel.',
         effect: { composure: -10, vision: -6 },
+        emotion: 'sad',
+      },
+    ],
+  },
+
+  // ── Day 6 night: 律师函 ──
+  {
+    id: 'day6_night',
+    day: 6,
+    phase: 'night',
+    textZh: '律师函。大厂的法务部发了一封警告信，声称你的产品某个功能侵犯了他们的专利。\n\n你的律师说："大概率是恐吓，但如果打官司，至少要花 $50K。"',
+    textEn: 'A legal letter. The tech giant\'s legal team claims one of your features infringes their patent.\n\nYour lawyer says: "Probably just intimidation, but if it goes to court, at least $50K."',
+    jennyEmotion: 'stressed',
+    choices: [
+      {
+        labelZh: '花钱请律师应对',
+        labelEn: 'Hire a lawyer to fight it',
+        resultZh: '律师费先收了一笔。你的银行账户又瘦了一圈。',
+        resultEn: 'The retainer fee hits your account. Your runway just got thinner.',
+        effect: { runway: -5, composure: -4 },
+        emotion: 'stressed',
+      },
+      {
+        labelZh: '删掉那个功能，息事宁人',
+        labelEn: 'Remove the feature, avoid the fight',
+        resultZh: '省了律师费，但产品少了一个核心功能。用户开始抱怨了。',
+        resultEn: 'Saved on legal fees, but the product lost a core feature. Users are complaining.',
+        effect: { runway: -1, vision: -8, morale: -1 },
         emotion: 'sad',
       },
     ],
@@ -321,6 +377,42 @@ export const STORY_EVENTS: StoryEvent[] = [
         resultZh: 'JM·F 沉默了一会儿。"那也不丢人。但你至少要试过。"',
         resultEn: 'JM·F is quiet for a moment. "That\'s no shame. But you have to try first."',
         effect: { composure: 4, morale: 1 },
+        emotion: 'sad',
+      },
+    ],
+  },
+
+  // ── Day 11 morning: 房租到期 ──
+  {
+    id: 'day11_morning',
+    day: 11,
+    phase: 'morning',
+    textZh: '房东来了。办公室租约到期，要么续租交三个月押金，要么月底搬走。\n\n"你们用了快一年了，"他说。"我也是看你们年轻人不容易才没涨价。但这次……市价涨了不少。"',
+    textEn: 'The landlord shows up. Office lease is expiring — renew with three months\' deposit, or move out by month\'s end.\n\n"I\'ve been going easy on you kids," he says. "But market rates have gone up quite a bit."',
+    jennyEmotion: 'stressed',
+    choices: [
+      {
+        labelZh: '续租，保持稳定',
+        labelEn: 'Renew the lease, maintain stability',
+        resultZh: '三个月押金一交，账户里的数字又少了一大截。但至少团队不用搬家。',
+        resultEn: 'Three months\' deposit paid. The account balance drops hard. But at least the team stays put.',
+        effect: { runway: -6, composure: 2, morale: 1 },
+        emotion: 'normal',
+      },
+      {
+        labelZh: '搬去更便宜的地方',
+        labelEn: 'Move to a cheaper place',
+        resultZh: '花了两天搬家。新办公室又小又吵，但省了一笔钱。团队士气受了点影响。',
+        resultEn: 'Two days wasted moving. The new office is tiny and noisy, but cheaper. Team morale takes a hit.',
+        effect: { runway: -2, energy: -8, morale: -1, composure: -4 },
+        emotion: 'sad',
+      },
+      {
+        labelZh: '搬回家办公',
+        labelEn: 'Work from home',
+        resultZh: '省了房租，但团队分散了。远程协作效率明显下降。',
+        resultEn: 'Saved rent, but the team is scattered. Remote collaboration is noticeably less efficient.',
+        effect: { runway: 0, vision: -6, morale: -2 },
         emotion: 'sad',
       },
     ],
@@ -503,6 +595,25 @@ export const NORMAL_STREAM_EVENTS: StreamEvent[] = [
       { labelZh: '数据还不够看，这是诚实的回答', labelEn: 'Data isn\'t great yet. Being honest about it.', resultZh: '投资人看了你一会儿。"至少你诚实。"', resultEn: 'The investor studies you. "At least you\'re honest."', effect: { runway: -2, composure: 4, morale: 1 }, emotion: 'sad' },
     ],
   },
+  {
+    id: 'p_burn',
+    textZh: '"你们每月 burn rate 多少？能撑几个月？"',
+    textEn: '"What\'s your monthly burn rate? How many months of runway?"',
+    choices: [
+      { labelZh: '坦诚说出真实数字', labelEn: 'Give the real number honestly', resultZh: '投资人沉默了几秒。你几乎能看到他脑子里在算"值不值得救"。', resultEn: 'Silence. You can almost see them calculating "is this worth saving?"', effect: { runway: -2, composure: -4 }, emotion: 'stressed' },
+      { labelZh: '稍微美化一下数据', labelEn: 'Slightly embellish the numbers', resultZh: '"跑得通。"他说。但如果他做尽调，你就完了。', resultEn: '"That works." But if they do due diligence, you\'re done.', effect: { runway: 1, composure: -6, morale: -1 }, emotion: 'normal' },
+      { labelZh: '转移话题到产品价值', labelEn: 'Redirect to product value', resultZh: '投资人打断你："我问的是数字。"空气凝固了。', resultEn: 'The investor cuts you off: "I asked about numbers." The air freezes.', effect: { runway: -4, composure: -6 }, emotion: 'stressed' },
+    ],
+  },
+  {
+    id: 'p_valuation',
+    textZh: '"你们期望的估值是多少？"',
+    textEn: '"What valuation are you looking for?"',
+    choices: [
+      { labelZh: '说一个合理的数字', labelEn: 'Name a reasonable figure', resultZh: '投资人点了点头。"可以谈。"', resultEn: 'The investor nods. "We can work with that."', effect: { runway: 2, composure: 2 }, emotion: 'normal' },
+      { labelZh: '开高价，留谈判空间', labelEn: 'Aim high, leave room to negotiate', resultZh: '投资人笑了。"你真敢开价。"然后站起来准备走了。', resultEn: 'The investor laughs. "Bold." Then stands up to leave.', effect: { runway: -5, composure: -8 }, emotion: 'stressed' },
+    ],
+  },
 ];
 
 export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
@@ -564,6 +675,36 @@ export const SPECIAL_STREAM_EVENTS: StreamEvent[] = [
     choices: [
       { labelZh: '给投资人看这条消息', labelEn: 'Show the investor this message', resultZh: '投资人看完后抬起头，眼神不一样了。', resultEn: 'The investor reads it, then looks up. Something shifts in their eyes.', effect: { runway: 2, composure: 5, morale: 1 }, emotion: 'happy' },
       { labelZh: '先收起来，专心会议', labelEn: 'Save it, focus on the meeting', resultZh: '你把手机扣过来，继续讲。但心里多了一份力量。', resultEn: 'You flip the phone face down and continue. But you feel stronger inside.', effect: { runway: 0, composure: 3 }, emotion: 'focused' },
+    ],
+  },
+  {
+    id: 'p_sp_duediligence',
+    textZh: '投资人说："我们做了尽调。你们上个月的实际 burn rate 比 pitch deck 里写的高了 40%。怎么回事？"',
+    textEn: 'The investor says: "We did due diligence. Your actual burn rate last month was 40% higher than what\'s in the deck. Care to explain?"',
+    tag: { zh: '尽职调查', en: 'DUE DILIGENCE', color: '#dc2626' },
+    choices: [
+      { labelZh: '坦诚承认，解释原因', labelEn: 'Own it, explain why', resultZh: '"我们招了两个人，服务器也升级了。短期支出增加，但长期是值得的。"投资人皱了皱眉，记了一笔。', resultEn: '"We hired two people and upgraded servers. Short-term costs, long-term value." The investor frowns but takes a note.', effect: { runway: -3, composure: -4, vision: 2 }, emotion: 'stressed' },
+      { labelZh: '试图转移话题', labelEn: 'Try to change the subject', resultZh: '投资人的表情冷了下来。"我们很看重透明度。"这次会议基本上废了。', resultEn: 'The investor\'s expression turns cold. "We value transparency." This meeting is essentially over.', effect: { runway: -6, composure: -8 }, emotion: 'stressed' },
+    ],
+  },
+  {
+    id: 'p_sp_termchange',
+    textZh: '投资人接到一个电话，回来后表情变了。"市场环境变了。我们需要重新评估估值。之前谈的条件……可能要调整。"',
+    textEn: 'The investor takes a call, returns with a different expression. "Market conditions changed. We need to reassess valuation. The terms we discussed... may need adjusting."',
+    tag: { zh: '变卦', en: 'TERMS CHANGED', color: '#b91c1c' },
+    choices: [
+      { labelZh: '接受新条件', labelEn: 'Accept the new terms', resultZh: '你咬着牙签了字。估值被压低了，但至少钱到账了——虽然比预期少了很多。', resultEn: 'You grit your teeth and sign. Valuation slashed, but at least some money comes in — far less than expected.', effect: { runway: 2, composure: -6, vision: -4, morale: -1 }, emotion: 'sad' },
+      { labelZh: '拒绝，保持底线', labelEn: 'Refuse, hold the line', resultZh: '投资人收起文件走了。你看着空荡荡的会议室，手在发抖。', resultEn: 'The investor packs up and leaves. You stare at the empty room, hands trembling.', effect: { runway: -4, composure: -10, vision: 6, morale: 1 }, emotion: 'stressed' },
+    ],
+  },
+  {
+    id: 'p_sp_leak',
+    textZh: '会议快结束时，你的手机响了。CTO 说："数据库被攻击了，用户数据可能泄露了。我们需要马上请安全公司。"',
+    textEn: 'Near the end of the meeting, your phone buzzes. The CTO: "Database was breached. User data may be compromised. We need a security firm, now."',
+    tag: { zh: '紧急事件', en: 'EMERGENCY', color: '#991b1b' },
+    choices: [
+      { labelZh: '立刻结束会议去处理', labelEn: 'End the meeting immediately, handle it', resultZh: '你跟投资人道歉后冲出去了。安全公司的报价让你倒吸一口凉气。', resultEn: 'You apologize to the investor and rush out. The security firm\'s quote makes your stomach drop.', effect: { runway: -7, composure: -6, vision: 2 }, emotion: 'stressed' },
+      { labelZh: '让 CTO 先处理，继续会议', labelEn: 'Let the CTO handle it, continue the meeting', resultZh: '你假装什么都没发生。但心里慌得要命，后半场完全没在状态。', resultEn: 'You pretend nothing happened. But your mind is elsewhere. The rest of the meeting is a blur.', effect: { runway: -4, composure: -8 }, emotion: 'stressed' },
     ],
   },
 ];
