@@ -56,7 +56,7 @@ const StreamSession = React.memo(
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const chosenRef = useRef(false);
     const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const pendingChoiceRef = useRef<{ index: number; speed: ResponseSpeed } | null>(null);
     const lastResultRef = useRef<string | null>(null);
     const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -73,7 +73,7 @@ const StreamSession = React.memo(
       setTimedOut(false);
       setResultText(null);
       setCardMinH(undefined);
-      if (resultTimerRef.current) clearTimeout(resultTimerRef.current);
+      pendingChoiceRef.current = null;
       startRef.current = Date.now();
 
       timerRef.current = setInterval(() => {
@@ -93,7 +93,6 @@ const StreamSession = React.memo(
 
       return () => {
         if (timerRef.current) clearInterval(timerRef.current);
-        if (resultTimerRef.current) clearTimeout(resultTimerRef.current);
       };
     }, [eventIndex]);
 
@@ -124,13 +123,18 @@ const StreamSession = React.memo(
       if (rText) {
         setResultText(rText);
         lastResultRef.current = rText;
-        resultTimerRef.current = setTimeout(() => {
-          setResultText(null);
-          onChoose(index, speed);
-        }, 2000);
+        pendingChoiceRef.current = { index, speed };
       } else {
         onChoose(index, speed);
       }
+    };
+
+    const handleDismissResult = () => {
+      if (!pendingChoiceRef.current) return;
+      const { index, speed } = pendingChoiceRef.current;
+      pendingChoiceRef.current = null;
+      setResultText(null);
+      onChoose(index, speed);
     };
 
     const remaining = Math.max(0, TIMER_TOTAL - elapsed);
@@ -245,8 +249,8 @@ const StreamSession = React.memo(
           )}
 
           {resultText ? (
-            <div className="pt-stream__result-hint">
-              {getText('投资人正在消化…', 'The investor is processing…')}
+            <div className="pt-stream__result-hint" onPointerDown={handleDismissResult}>
+              {getText('点击继续', 'Tap to continue')}
             </div>
           ) : pendingEnd ? (
             <button className="pt-stream__end-btn" onPointerDown={onStreamEnd}>
