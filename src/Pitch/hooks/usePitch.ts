@@ -115,6 +115,7 @@ function initialState(): GameState {
     streamRunwayGained: 0,
     streamLastEvent: null,
     streamPendingEnd: false,
+    streamResultPending: false,
     dayLogStart: { energy: INITIAL_STATS.energy, composure: INITIAL_STATS.composure, vision: INITIAL_STATS.vision, runway: INITIAL_STATS.runway },
     pitchedToday: false,
     showDrainNotice: false,
@@ -211,6 +212,7 @@ export function usePitch() {
           streamRunwayGained: 0,
           streamLastEvent: null,
           streamPendingEnd: false,
+          streamResultPending: false,
           pitchedToday: true,
           streamStartStats: before,
           statAnimFrom: null,
@@ -270,6 +272,7 @@ export function usePitch() {
           streamIndex: 0,
           streamRunwayGained: 0,
           streamLastEvent: null,
+          streamResultPending: false,
           pitchedToday: true,
           streamStartStats: before,
         };
@@ -345,11 +348,18 @@ export function usePitch() {
         : s.streamLastEvent;
       next = { ...next, streamRunwayGained: s.streamRunwayGained + Math.max(0, gained), streamLastEvent: lastEvent };
 
+      return { ...next, streamResultPending: true };
+    });
+  }, []);
+
+  const advanceStream = useCallback(() => {
+    setState(s => {
+      if (s.phase !== 'stream' || !s.streamResultPending) return s;
       const nextIndex = s.streamIndex + 1;
       if (nextIndex >= s.streamQueue.length) {
-        return { ...next, streamPendingEnd: true };
+        return { ...s, streamResultPending: false, streamPendingEnd: true };
       }
-      return { ...next, streamIndex: nextIndex };
+      return { ...s, streamResultPending: false, streamIndex: nextIndex };
     });
   }, []);
 
@@ -407,6 +417,7 @@ export function usePitch() {
       chooseAction,
       dismissActionResult,
       chooseStreamOption,
+      advanceStream,
       confirmStreamEnd,
       confirmDayEnd,
       clearStatAnim,

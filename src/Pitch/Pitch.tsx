@@ -282,7 +282,9 @@ const Pitch = React.memo(
             eventIndex={state.streamIndex}
             totalEvents={state.streamQueue.length}
             onChoose={sfx.chooseStreamOption}
+            onAdvance={actions.advanceStream}
             lastFollowerEvent={state.streamLastEvent}
+            resultPending={state.streamResultPending}
             pendingEnd={state.streamPendingEnd}
             onStreamEnd={actions.confirmStreamEnd}
           />
