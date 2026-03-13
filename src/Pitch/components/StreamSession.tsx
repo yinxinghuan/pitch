@@ -149,7 +149,7 @@ const StreamSession = React.memo(
     const flashConfig = flash ? VOLATILE_CONFIG[flash.type] : null;
 
     return (
-      <div className="pt-stream" ref={ref}>
+      <div className="pt-stream" ref={ref} onPointerDown={resultText ? handleDismissResult : undefined}>
         <img className="pt-stream__bg" src={bgStream} alt="" draggable={false} />
         <div className="pt-stream__overlay" />
 
@@ -249,7 +249,7 @@ const StreamSession = React.memo(
           )}
 
           {resultText ? (
-            <div className="pt-stream__result-hint" onPointerDown={handleDismissResult}>
+            <div className="pt-stream__result-hint">
               {getText('点击继续', 'Tap to continue')}
             </div>
           ) : pendingEnd ? (
