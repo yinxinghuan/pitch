@@ -109,8 +109,8 @@ const StatusBar = React.memo(
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [statAnimFrom]);
 
-    // Display runway as months (runway / 10)
-    const runwayMonths = (anim.runway / 10).toFixed(1);
+    // Display runway as money: runway 24 → "$240K"
+    const runwayK = Math.round(anim.runway * 10);
 
     return (
       <div className="pt-status" ref={ref} onPointerDown={onHelpOpen}>
@@ -126,7 +126,7 @@ const StatusBar = React.memo(
             <div className="pt-status__flw">
               <img className="pt-status__flw-icon" src={iconRunway} alt="" draggable={false} />
               <span className={`pt-status__flw-num${statAnimFrom && anim.runway !== runway ? ' pt-status__flw-num--counting' : ''}`}>
-                {runwayMonths}mo
+                ${runwayK}K
               </span>
             </div>
             <span className="pt-status__help-hint">?</span>
