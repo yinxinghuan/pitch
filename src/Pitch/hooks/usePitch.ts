@@ -18,7 +18,7 @@ const INITIAL_STATS = {
 };
 
 // Passive drain each day at morning start
-const DAILY_DRAIN = { energy: -5, composure: -10, vision: -9, runway: -3, morale: -1 };
+const DAILY_DRAIN = { energy: -5, composure: -8, vision: -7, runway: -3, morale: -1 };
 
 const PHASE_ORDER: ActionPhase[] = ['morning', 'build', 'pitch', 'night'];
 
