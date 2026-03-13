@@ -18,7 +18,7 @@ const INITIAL_STATS = {
 };
 
 // Passive drain each day at morning start
-const DAILY_DRAIN = { energy: -5, composure: -8, vision: -9, runway: -3, morale: -1 };
+const DAILY_DRAIN = { energy: -5, composure: -8, vision: -9, runway: -6, morale: -1 };
 
 const PHASE_ORDER: ActionPhase[] = ['morning', 'build', 'pitch', 'night'];
 
@@ -33,12 +33,13 @@ export function volatileRunway(base: number): { value: number; type: VolatileTyp
   if (base === 0) return { value: 0, type: 'normal' };
   const r = Math.random();
   if (base > 0) {
-    if (r < 0.05) return { value: Math.round(base * (2.0 + Math.random())),       type: 'viral' };
-    if (r < 0.15) return { value: Math.round(base * (1.4 + Math.random() * 0.4)), type: 'boost' };
-    if (r < 0.28) return { value: Math.round(base * (0.3 + Math.random() * 0.3)), type: 'flop' };
+    if (r < 0.08) return { value: Math.round(base * (4.0 + Math.random() * 3)),   type: 'viral' };
+    if (r < 0.22) return { value: Math.round(base * (2.0 + Math.random())),        type: 'boost' };
+    if (r < 0.40) return { value: Math.round(base * (0.1 + Math.random() * 0.3)),  type: 'flop' };
     return { value: base, type: 'normal' };
   } else {
-    if (r < 0.08) return { value: Math.round(base * (1.5 + Math.random())),       type: 'controversy' };
+    if (r < 0.15) return { value: Math.round(base * (2.5 + Math.random() * 2)),    type: 'controversy' };
+    if (r < 0.35) return { value: Math.round(base * (1.5 + Math.random())),         type: 'controversy' };
     return { value: base, type: 'normal' };
   }
 }
