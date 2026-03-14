@@ -265,6 +265,11 @@ export function usePitch() {
       if (action.isPitch) {
         const queue = pickStreamEvents();
         let next = applyEffect(s, action.effect);
+        const death = checkDeath(next);
+        if (death) { const d = deathDelta(action.effect, death); return { ...next, phase: 'dead', deathCause: death, deathContext: {
+          labelZh: action.labelZh, labelEn: action.labelEn,
+          delta: d, displayValue: preStat(s, death) + d,
+        }}; }
         return {
           ...next,
           phase: 'stream' as Phase,
@@ -310,12 +315,12 @@ export function usePitch() {
         return { ...choice.effect, runway: value };
       })();
 
-      // Composure multiplier on runway gains
+      // Composure multiplier on runway gains only (not losses)
       const composureFactor = s.composure >= 75 ? 1.3
         : s.composure >= 50 ? 1.0
         : s.composure >= 25 ? 0.65
         : 0.35;
-      const adjustedEffect = volatileEffect.runway
+      const adjustedEffect = (volatileEffect.runway && volatileEffect.runway > 0)
         ? { ...volatileEffect, runway: Math.round(volatileEffect.runway * composureFactor) }
         : volatileEffect;
 
@@ -330,11 +335,18 @@ export function usePitch() {
       };
       const bonus = speedBonus[speed];
       if (bonus !== 0 && adjustedEffect.runway) {
-        const extra = Math.round(adjustedEffect.runway * Math.abs(bonus));
-        next = applyEffect(next, {
-          runway: bonus > 0 ? extra : -extra,
-          composure: speed === 'timeout' ? -5 : 0,
-        });
+        // Speed bonus only applies to gains; speed penalty only applies to losses
+        const isGain = adjustedEffect.runway > 0;
+        const shouldApply = isGain ? bonus > 0 : bonus < 0;
+        if (shouldApply) {
+          const extra = Math.round(Math.abs(adjustedEffect.runway) * Math.abs(bonus));
+          next = applyEffect(next, {
+            runway: isGain ? extra : -extra,
+            composure: speed === 'timeout' ? -5 : 0,
+          });
+        } else if (speed === 'timeout') {
+          next = applyEffect(next, { composure: -5 });
+        }
       }
 
       const death = checkDeath(next);
@@ -367,6 +379,11 @@ export function usePitch() {
   const confirmStreamEnd = useCallback(() => {
     setState(s => {
       if (s.phase !== 'stream' || !s.streamPendingEnd) return s;
+      const death = checkDeath(s);
+      if (death) { return { ...s, phase: 'dead', deathCause: death, deathContext: {
+        labelZh: '会议结束', labelEn: 'Meeting ended',
+        delta: 0, displayValue: preStat(s, death),
+      }}; }
       const result = advancePhase({ ...s, streamPendingEnd: false }, s.prevPhase);
       if ((PHASE_ORDER as string[]).includes(result.phase) && s.streamStartStats) {
         return { ...result, statAnimFrom: s.streamStartStats };
