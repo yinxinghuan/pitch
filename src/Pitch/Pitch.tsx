@@ -78,12 +78,13 @@ const PHASE_FILTER: Record<string, string> = {
 
 const Pitch = React.memo(
   forwardRef<HTMLDivElement, Record<string, never>>(function Pitch(_props, ref) {
-    const { state, actions, currentPhaseActions } = usePitch();
+    const { state, actions, currentPhaseActions, hasSave } = usePitch();
     const { phase, day, energy, composure, vision, runway, pitchedToday } = state;
 
     const [showSplash, setShowSplash] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
+    const [showResume, setShowResume] = useState(() => !!hasSave);
     const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('pitch');
 
     // 游戏结束时提交分数
@@ -136,6 +137,12 @@ const Pitch = React.memo(
         stopAmbient();
         startAmbient('morning');
         actions.restart();
+      },
+      resumeGame: () => {
+        resumeAudio();
+        playGameStart();
+        startAmbient('morning');
+        actions.resumeGame();
       },
       chooseAction: (action: Parameters<typeof actions.chooseAction>[0]) => {
         playConfirm();
@@ -191,6 +198,21 @@ const Pitch = React.memo(
               fetchGlobal={fetchGlobalLeaderboard}
               fetchFriends={fetchFriendsLeaderboard}
             />
+          )}
+          {showResume && hasSave && (
+            <div className="pt-resume">
+              <div className="pt-resume__panel">
+                <div className="pt-resume__icon">💾</div>
+                <div className="pt-resume__title">继续上次游戏？</div>
+                <div className="pt-resume__sub">第 {hasSave.day} 天的进度已保存</div>
+                <button className="pt-resume__btn pt-resume__btn--yes" onPointerDown={() => { setShowResume(false); sfx.resumeGame(); }}>
+                  继续
+                </button>
+                <button className="pt-resume__btn pt-resume__btn--no" onPointerDown={() => setShowResume(false)}>
+                  重新开始
+                </button>
+              </div>
+            </div>
           )}
           <img className="pt__start-bg" src={bgRoom} alt="" draggable={false} />
           <NoiseCanvas opacity={0.35} className="pt__start-noise" />
