@@ -1,4 +1,5 @@
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
+import { useGameScore, Leaderboard } from '@shared/leaderboard';
 import { usePitch } from './hooks/usePitch';
 import type { GameState } from './types';
 import StatusBar from './components/StatusBar';
@@ -82,6 +83,16 @@ const Pitch = React.memo(
 
     const [showSplash, setShowSplash] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
+    const [showLeaderboard, setShowLeaderboard] = useState(false);
+    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('pitch');
+
+    // 游戏结束时提交分数
+    useEffect(() => {
+      if (phase === 'ending' || phase === 'dead') {
+        const score = runway + day * 100;
+        if (score > 0) submitScore(score);
+      }
+    }, [phase]);
 
     // ── Phase-change sound effects ────────────────────────────────────────────
     const prevPhase = useRef(phase);
@@ -172,6 +183,15 @@ const Pitch = React.memo(
     if (phase === 'start') {
       return (
         <div className="pt" ref={ref}>
+          {showLeaderboard && (
+            <Leaderboard
+              gameName="PITCH"
+              isInAigram={isInAigram}
+              onClose={() => setShowLeaderboard(false)}
+              fetchGlobal={fetchGlobalLeaderboard}
+              fetchFriends={fetchFriendsLeaderboard}
+            />
+          )}
           <img className="pt__start-bg" src={bgRoom} alt="" draggable={false} />
           <NoiseCanvas opacity={0.35} className="pt__start-noise" />
           <div className="pt__start">
@@ -182,6 +202,7 @@ const Pitch = React.memo(
               <button className="pt__start-btn" onPointerDown={sfx.startGame}>
                 LAUNCH
               </button>
+              <button className="pt__lb-icon" onPointerDown={() => setShowLeaderboard(true)}>🏆</button>
             </div>
           </div>
         </div>
