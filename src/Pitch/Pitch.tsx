@@ -1,7 +1,21 @@
-import React, { forwardRef, useState, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import { useGameScore, Leaderboard } from '@shared/leaderboard';
-import { usePitch } from './hooks/usePitch';
+import { useGameSave } from '@shared/save';
+import { usePitch, type PitchSave } from './hooks/usePitch';
 import type { GameState } from './types';
+
+// One-time migration from the legacy `pitch_v1_save` localStorage key to the
+// unified `pitch-save` key used by useGameSave so existing players don't
+// lose their progress when this update lands.
+(function migrateLegacySave() {
+  try {
+    const old = localStorage.getItem('pitch_v1_save');
+    if (old && !localStorage.getItem('pitch-save')) {
+      localStorage.setItem('pitch-save', old);
+      localStorage.removeItem('pitch_v1_save');
+    }
+  } catch { /* private mode / quota — ignore */ }
+})();
 import StatusBar from './components/StatusBar';
 import ActionPanel from './components/ActionPanel';
 import EventOverlay from './components/EventOverlay';
@@ -78,13 +92,33 @@ const PHASE_FILTER: Record<string, string> = {
 
 const Pitch = React.memo(
   forwardRef<HTMLDivElement, Record<string, never>>(function Pitch(_props, ref) {
-    const { state, actions, currentPhaseActions, hasSave } = usePitch();
+    const { savedData, persist, clear } = useGameSave<PitchSave>('pitch');
+
+    const loadSave = useCallback(() => savedData ?? null, [savedData]);
+    const persistRef = useRef(persist);
+    persistRef.current = persist;
+    const persistCb = useCallback((s: PitchSave) => persistRef.current(s), []);
+    const clearRef = useRef(clear);
+    clearRef.current = clear;
+    const clearCb = useCallback(() => { void clearRef.current(); }, []);
+
+    const { state, actions, currentPhaseActions } = usePitch({
+      loadSave,
+      persist: persistCb,
+      clearSave: clearCb,
+    });
     const { phase, day, energy, composure, vision, runway, pitchedToday } = state;
 
+    const hasSave = savedData ? { day: savedData.day ?? 1 } : null;
     const [showSplash, setShowSplash] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
-    const [showResume, setShowResume] = useState(() => !!hasSave);
+    const [showResume, setShowResume] = useState(false);
+    // Reveal the resume prompt once the cloud probe completes — covers the case
+    // where a save lives only in the cloud (different device / first visit).
+    useEffect(() => {
+      if (hasSave) setShowResume(true);
+    }, [hasSave?.day]);
     const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('pitch');
 
     // 游戏结束时提交分数
@@ -208,7 +242,7 @@ const Pitch = React.memo(
                 <button className="pt-resume__btn pt-resume__btn--yes" onPointerDown={() => { setShowResume(false); sfx.resumeGame(); }}>
                   继续
                 </button>
-                <button className="pt-resume__btn pt-resume__btn--no" onPointerDown={() => setShowResume(false)}>
+                <button className="pt-resume__btn pt-resume__btn--no" onPointerDown={() => { void clear(); setShowResume(false); }}>
                   重新开始
                 </button>
               </div>
