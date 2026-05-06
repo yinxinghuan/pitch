@@ -28,6 +28,7 @@ import SplashScreen from './components/SplashScreen';
 import NoiseCanvas from './components/NoiseCanvas';
 import HelpPanel from './components/HelpPanel';
 import DailyDrainNotice from './components/DailyDrainNotice';
+import PitchFeedField from './components/PitchFeedField';
 import bgRoom from './img/bg_room.png';
 import jennyIdle from './img/jenny_idle.png';
 import jennyHappy from './img/jenny_happy.png';
@@ -250,6 +251,7 @@ const Pitch = React.memo(
           )}
           <img className="pt__start-bg" src={bgRoom} alt="" draggable={false} />
           <NoiseCanvas opacity={0.35} className="pt__start-noise" />
+          <PitchFeedField />
           <div className="pt__start">
             <div className="pt__start-content">
               <h1 className="pt__start-title">PITCH</h1>
