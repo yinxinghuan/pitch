@@ -120,7 +120,7 @@ const Pitch = React.memo(
     useEffect(() => {
       if (hasSave) setShowResume(true);
     }, [hasSave?.day]);
-    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('pitch');
+    const { isInAigram, submitScore, fetchLeaderboard } = useGameScore();
 
     // 游戏结束时提交分数
     useEffect(() => {
@@ -230,8 +230,7 @@ const Pitch = React.memo(
               gameName="PITCH"
               isInAigram={isInAigram}
               onClose={() => setShowLeaderboard(false)}
-              fetchGlobal={fetchGlobalLeaderboard}
-              fetchFriends={fetchFriendsLeaderboard}
+              fetch={fetchLeaderboard}
             />
           )}
           {showResume && hasSave && (
