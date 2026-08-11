@@ -116,7 +116,7 @@ const translations = {
 type Locale = keyof typeof translations;
 
 function detectLocale(): Locale {
-  const override = typeof localStorage !== 'undefined' ? localStorage.getItem('pitch_locale') : null;
+  const override = typeof localStorage !== 'undefined' ? alteruLocalStorage.getItem('pitch_locale') : null;
   if (override === 'en' || override === 'zh') return override;
   const lang = (typeof navigator !== 'undefined' ? navigator.language : 'en').toLowerCase();
   return lang.startsWith('zh') ? 'zh' : 'en';

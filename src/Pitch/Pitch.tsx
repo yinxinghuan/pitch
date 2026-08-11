@@ -9,10 +9,10 @@ import type { GameState } from './types';
 // lose their progress when this update lands.
 (function migrateLegacySave() {
   try {
-    const old = localStorage.getItem('pitch_v1_save');
-    if (old && !localStorage.getItem('pitch-save')) {
-      localStorage.setItem('pitch-save', old);
-      localStorage.removeItem('pitch_v1_save');
+    const old = alteruLocalStorage.getItem('pitch_v1_save');
+    if (old && !alteruLocalStorage.getItem('pitch-save')) {
+      alteruLocalStorage.setItem('pitch-save', old);
+      alteruLocalStorage.removeItem('pitch_v1_save');
     }
   } catch { /* private mode / quota — ignore */ }
 })();
