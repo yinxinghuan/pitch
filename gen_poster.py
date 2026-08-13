@@ -17,9 +17,9 @@ _SSL_CTX = ssl.create_default_context()
 _SSL_CTX.check_hostname = False
 _SSL_CTX.verify_mode    = ssl.CERT_NONE
 
-R2_ACCOUNT_ID = "[removed-r2-account-id]"
-R2_ACCESS_KEY = "[removed-r2-access-key]"
-R2_SECRET_KEY = "[removed-r2-secret-key]"
+R2_ACCOUNT_ID = os.environ["ALTERU_R2_ACCOUNT_ID"]
+R2_ACCESS_KEY = os.environ["ALTERU_R2_ACCESS_KEY_ID"]
+R2_SECRET_KEY = os.environ["ALTERU_R2_SECRET_ACCESS_KEY"]
 R2_BUCKET     = "aigram"
 R2_ENDPOINT   = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 R2_PUBLIC     = "https://images.aiwaves.tech"
